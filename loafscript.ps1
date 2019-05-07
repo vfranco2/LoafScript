@@ -1,5 +1,6 @@
 #loafscript built by Vlad Franco and Jag Singh
 #hand deep in the bag
+#sodeep
 
 #Script Path for Oracle Client
 $ScriptPath = Split-Path $MyInvocation.InvocationName
