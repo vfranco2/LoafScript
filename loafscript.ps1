@@ -1,10 +1,17 @@
 #loafscript built by Vlad Franco and Jag Singh
 #hand deep in the bag
 
+$Type = Read-Host -Prompt 'Are you a Faceuts user [y/n]?' 
+If($type = "y"){ 
 #Script Path for Oracle Client
 $ScriptPath = Split-Path $MyInvocation.InvocationName
 & ".\loaftext"
-
+}
+Else {
+#Script Path for Oracle Client x32
+$ScriptPath1 = Split-Path $MyInvocation.InvocationName
+& ".\loaftext2" 
+}
 #Checks to see if Oracle 
 try{
 tnsping
