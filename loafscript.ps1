@@ -4,7 +4,6 @@ do{$Type = Read-Host -Prompt 'Install Oracle for Facets? y=yes (Install Oracle 3
 until(($Type -eq "y") -or ($Type -eq "n") -or ($Type -eq "s"))
 
 switch ($Type){
-
 "y" {#Script Path for Oracle Client
 $ScriptPath = Split-Path $MyInvocation.InvocationName
 & "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x32\Deploy-Application.ps1"}
@@ -13,9 +12,8 @@ $ScriptPath = Split-Path $MyInvocation.InvocationName
 $ScriptPath1 = Split-Path $MyInvocation.InvocationName
 & "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x64\Deploy-Application.ps1"}
 
-"s" {#Script Path for Oracle Client x32
+"s" {#Skip that shit
 Write-Host "Oracle Installation Skipped"}
-
 }
 
 #Setting Enviorment Variables 
@@ -35,7 +33,7 @@ catch{
 
 #Checks to see if Oracle is installed
 try{
-tnsping
+tnsping adtldev
 }
 catch{
 "Oracle is not installed on this computer"
@@ -46,8 +44,21 @@ pause
 #Checks bitlocker
 manage-bde c: -protectors -get
 
-#Launch HIPA
-$ScriptPath1 = Split-Path $MyInvocation.InvocationName
-& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\2.Drivers\sp94976.exe"
+#HIPA Prompt
+do{$Type = Read-Host -Prompt 'Launch HIPA? y/n'}
+until(($Type -eq "y") -or ($Type -eq "n"))
+
+switch ($Type){
+"y" {#Path for HIPA launcher
+$ScriptPath = Split-Path $MyInvocation.InvocationName
+& "\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\2.Drivers\sp94976.exe"}
+
+"n" {#Skip that shit
+Write-Host "HIPA Skipped"}
+}
+
+#Check BIOS version
+wmic bios get smbiosbiosversion
+wmic bios get serialnumber
 
 pause
