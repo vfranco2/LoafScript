@@ -1,6 +1,6 @@
 #loafscript built by Vlad Franco and Jag Singh
 #\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x32\Deploy-Application.ps1
-
+#changed something jagbranch
 
 do{$Type = Read-Host -Prompt 'Are you a Facets user [y/n]?'}
 until(($Type -eq "y") -or ($Type -eq "n"))
