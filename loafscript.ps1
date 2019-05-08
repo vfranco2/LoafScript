@@ -1,7 +1,7 @@
 #loafscript built by Vlad Franco and Jag Singh
 
-do{$Type = Read-Host -Prompt 'Are you a Facets user [y/n]?'}
-until(($Type -eq "y") -or ($Type -eq "n"))
+do{$Type = Read-Host -Prompt 'Install Oracle for Facets? y=yes (Install Oracle 32 bit), n=no (Install Oracle 64 bit), s=skip Oracle installation'}
+until(($Type -eq "y") -or ($Type -eq "n") -or ($Type -eq "s"))
 
 switch ($Type){
 
@@ -12,6 +12,9 @@ $ScriptPath = Split-Path $MyInvocation.InvocationName
 "n" {#Script Path for Oracle Client x32
 $ScriptPath1 = Split-Path $MyInvocation.InvocationName
 & "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x64\Deploy-Application.ps1"}
+
+"s" {#Script Path for Oracle Client x32
+Write-Host "Oracle Installation Skipped"}
 
 }
 
@@ -42,5 +45,9 @@ pause
 
 #Checks bitlocker
 manage-bde c: -protectors -get
+
+#Launch HIPA
+$ScriptPath1 = Split-Path $MyInvocation.InvocationName
+& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\2.Drivers\sp94976.exe"
 
 pause
