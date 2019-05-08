@@ -30,7 +30,7 @@ catch{
 "Couldn't copy ora files"
 }
 
-#Checks to see if Oracle 
+#Checks to see if Oracle is installed
 try{
 tnsping
 }
@@ -40,14 +40,7 @@ $error[0]
 pause
 }
 
-try{
+#Checks bitlocker
 manage-bde c: -protectors -get
-}
-catch{
-"Cannot get bitlocker pass"
-pause
-}
-
-
 
 pause
