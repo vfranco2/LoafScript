@@ -7,6 +7,8 @@ Feats.
 -Checks bitlocker password cmd
 -Adds Enivorment Varible
 -Checks and Adds TNS files (.Ora)
+-HIPA launcher
+-Checks BIOS version/password
 
 V1 5/8/2019
 --------------------------------------------- 
