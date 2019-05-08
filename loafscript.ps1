@@ -1,9 +1,10 @@
 #loafscript built by Vlad Franco and Jag Singh
-#hand deep in the bag
+#\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x32\Deploy-Application.ps1
 
 $Type = Read-Host -Prompt 'Are you a Faceuts user [y/n]?' 
 If($type = "y"){ 
 #Script Path for Oracle Client
+
 $ScriptPath = Split-Path $MyInvocation.InvocationName
 & ".\loaftext"
 }
@@ -44,3 +45,5 @@ Else{Write-Errror "ERROR STEP 3: Oracle file not found or not installed"
 catch{
 "Couldn't copy ora files"
 }
+
+pause
