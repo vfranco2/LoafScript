@@ -1,1 +1,0 @@
-Write-Host "Oracle was installed x64"

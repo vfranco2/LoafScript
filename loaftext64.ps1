@@ -1,0 +1,1 @@
+Write-Host "Oracle 64 was installed"
