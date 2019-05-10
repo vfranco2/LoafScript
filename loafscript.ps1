@@ -45,19 +45,6 @@ pause
 manage-bde c: -protectors -get
 
 
-#Equitrac Prompt
-do{$Type = Read-Host -Prompt 'Launch Equitrac setup? y/n'}
-until(($Type -eq "y") -or ($Type -eq "n"))
-
-switch ($Type){
-"y" {#Path for Equitrac launcher
-$ScriptPath = Split-Path $MyInvocation.InvocationName
-& "\\equitracprint1"}
-
-"n" {#Skip that shit
-Write-Host "Equitrac setup skipped"}
-}
-
 #HIPA Prompt
 do{$Type = Read-Host -Prompt 'Launch HIPA? y/n'}
 until(($Type -eq "y") -or ($Type -eq "n"))
