@@ -1,11 +1,11 @@
 #loafscript built by Vlad Franco and Jag Singh
-#
-#
+#& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x32\Deploy-Application.ps1"}
+#& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x64\Deploy-Application.ps1"}
 
-do{$TypeOra = Read-Host -Prompt 'Install Oracle? 3=32bit, 6=64bit, n=skip oracle'}
-until(($Type -eq "y") -or ($Type -eq "n"))
+do{$Type = Read-Host -Prompt 'Install Oracle? 3=32bit, 6=64bit, n=skip oracle'}
+until(($Type -eq "3") -or ($Type -eq "6") -or ($Type -eq "n"))
 
-switch ($TypeOra){
+switch ($Type){
 "3" {#Script Path for Oracle Client x32
 $ScriptPath = Split-Path $MyInvocation.InvocationName
 & "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x32\Deploy-Application.ps1"}
