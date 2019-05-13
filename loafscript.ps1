@@ -1,18 +1,20 @@
 #loafscript built by Vlad Franco and Jag Singh
+#\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x32\Deploy-Application.ps1
+#\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x64\Deploy-Application.ps1
 
-do{$Type = Read-Host -Prompt 'Install Oracle for Facets? y=yes (Install Oracle 32 bit), n=no (Install Oracle 64 bit), s=skip Oracle installation'}
-until(($Type -eq "y") -or ($Type -eq "n") -or ($Type -eq "s"))
+do{$TypeOra = Read-Host -Prompt 'Install Oracle? 3=32bit, 6=64bit, n=skip oracle'}
+until(($Type -eq "y") -or ($Type -eq "n"))
 
-switch ($Type){
-"y" {#Script Path for Oracle Client
+switch ($TypeOra){
+"3" {#Script Path for Oracle Client
 $ScriptPath = Split-Path $MyInvocation.InvocationName
-& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x32\Deploy-Application.ps1"}
+& ".\loaftext32"}
 
-"n" {#Script Path for Oracle Client x32
+"6" {#Script Path for Oracle Client x32
 $ScriptPath1 = Split-Path $MyInvocation.InvocationName
-& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle\Oracle_Oracle_12c_x64\Deploy-Application.ps1"}
+& ".\loaftext64"}
 
-"s" {#Skip that shit
+"n" {#Skip that shit
 Write-Host "Oracle Installation Skipped"}
 }
 
@@ -52,7 +54,7 @@ until(($Type -eq "y") -or ($Type -eq "n"))
 switch ($Type){
 "y" {#Path for HIPA launcher
 $ScriptPath = Split-Path $MyInvocation.InvocationName
-& "\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\2.Drivers\sp94976.exe"}
+& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\2.Drivers\sp94976.exe"}
 
 "n" {#Skip that shit
 Write-Host "HIPA Skipped"}
