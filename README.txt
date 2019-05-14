@@ -9,6 +9,8 @@ Feats.
 -Checks and Adds TNS files (.Ora)
 -HIPA launcher
 -Checks BIOS version/password
+-Runs Office Updater (Still need to launch Word to force update!)
+-Option to restart computer
 
-V1 5/8/2019
+V2 5/14/2019
 --------------------------------------------- 

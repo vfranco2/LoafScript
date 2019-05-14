@@ -18,13 +18,15 @@ $ScriptPath1 = Split-Path $MyInvocation.InvocationName
 Write-Host "Oracle Installation Skipped"}
 }
 
+
 #Setting Enviorment Variables 
 [Environment]::SetEnvironmentVariable("TNS_ADMIN","C:\Oracle\product\12.1.0\dbhome_1\network\admin","Machine")
+
 
 #Checks to see if Oracle Path Exists
 try{
 If(Test-Path -path "C:\Oracle\product\12.1.0\dbhome_1\network\admin"){
-xcopy "*.ora" "C:\Oracle\product\12.1.0\dbhome_1\network\admin" /y
+xcopy ".\Data\*ora" "C:\Oracle\product\12.1.0\dbhome_1\network\admin" /y
 }
 Else{Write-Errror "ERROR STEP 3: Oracle file not found or not installed"
 }
@@ -32,6 +34,7 @@ Else{Write-Errror "ERROR STEP 3: Oracle file not found or not installed"
 catch{
 "Couldn't copy ora files"
 }
+
 
 #Checks to see if Oracle is installed
 try{
@@ -42,6 +45,7 @@ catch{
 $error[0]
 pause
 }
+
 
 #Checks bitlocker
 manage-bde c: -protectors -get
@@ -60,12 +64,33 @@ $ScriptPath = Split-Path $MyInvocation.InvocationName
 Write-Host "HIPA Skipped"}
 }
 
+
 #Check BIOS version
 Write-Host "Bios Version"
 wmic bios get smbiosbiosversion
 wmic bios get serialnumber
 
+
 #Get hostname
 hostname >> H:\zzzhosts.txt
+
+
+#Office updater script
+do{$Type = Read-Host -Prompt 'Run Office Updater? y/n'}
+until(($Type -eq "y") -or ($Type -eq "n"))
+
+switch ($Type){
+"y" {#Update office
+$ScriptPath = Split-Path $MyInvocation.InvocationName
+& ".\Data\Update Office to Semi Annual Channel - 64bit.bat"
+}
+
+"n" {#Skip that shit
+Write-Host "Office update Skipped"}
+}
+
+
+#Restart computer
+Restart-Computer -Confirm:$true
 
 pause
