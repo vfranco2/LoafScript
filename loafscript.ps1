@@ -76,7 +76,7 @@ hostname >> H:\zzzhosts.txt
 
 
 #Office updater script
-do{$Type = Read-Host -Prompt 'Setup Office stuff? 6=64bit updater, 3=32bit installer, n=Skip this step'}
+do{$Type = Read-Host -Prompt 'Setup Office stuff? 6=64bit updater, 3=32bit updater, n=Skip this step'}
 until(($Type -eq "6") -or ($Type -eq "3") -or ($Type -eq "n"))
 
 switch ($Type){
@@ -85,9 +85,9 @@ $ScriptPath = Split-Path $MyInvocation.InvocationName
 & ".\Data\Update Office to Semi Annual Channel - 64bit.bat"
 }
 
-"3" {#Install office 32 bit
+"3" {#Update office 32 bit
 $ScriptPath = Split-Path $MyInvocation.InvocationName
-& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\Vlad\Setup.X86.en-us_O365ProPlusRetail_02a14643-40fd-4729-a226-12e4d5063675_TX_PR_b_32_.exe"
+& ".\Data\Update Office to Semi Annual Channel.bat"
 }
 
 "n" {#Skip that shit
