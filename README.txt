@@ -1,5 +1,5 @@
-Run loafscript in PowerShell.
-Y for "facets user" installs Oracle 32 bit, N installs 64 bit.
+Run LoafScript in PowerShell.
+Select desired options for install.
 #############################################
 Feats. 
 -Adds respective oracle client 
@@ -12,5 +12,5 @@ Feats.
 -Runs Office Updater (Still need to launch Word to force update!)
 -Option to restart computer
 
-V2 5/14/2019
+V3 5/22/2019
 --------------------------------------------- 
