@@ -1,9 +1,0 @@
-Quick Notes:
--Registery Keys deleted 
--Env variables deleted
--Program files Oracle deleted
-
-Problems:
--Start Menu path not found --- parameter issues
--Path rights not admin? Can uninstall manually, maybe try from H:?
--delete oracle file from root 

@@ -1,4 +1,7 @@
-﻿$inputXML = @"
+﻿#loafscript built by Vlad Franco and Jag Singh
+
+
+$inputXML = @"
 <Window x:Class="LoafGui.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -23,7 +26,7 @@
         <Button x:Name="Oupdate32" Content="32" HorizontalAlignment="Left" Height="16" Margin="116,169,0,0" VerticalAlignment="Top" Width="20"/>
         <Button x:Name="Oupdate64" Content="64" HorizontalAlignment="Left" Height="16" Margin="141,169,0,0" VerticalAlignment="Top" Width="20"/>
         <Button x:Name="Runhipa" Content="" HorizontalAlignment="Left" Height="16" Margin="116,190,0,0" VerticalAlignment="Top" Width="20"/>
-        <TextBox HorizontalAlignment="Left" Height="363" Margin="183,21,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="547"/>
+        <TextBox x:Name="loaflog" HorizontalAlignment="Left" Height="363" Margin="183,21,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="547"/>
     </Grid>
 </Window>
 "@ 
@@ -60,11 +63,10 @@ get-variable WPF*
 Get-FormVariables
 
 
-#===========================================================================
-# Use this space to add code to the various form elements in your GUI
-#===========================================================================
-                                                                    
-     
+#-------------------------
+#Button Functions/Output
+#-------------------------
+
 #Reference 
  
 #Adding items to a dropdown/combo box
@@ -72,12 +74,75 @@ Get-FormVariables
      
 #Setting the text of a text box to the current PC name    
     #$WPFtextBox.Text = $env:COMPUTERNAME
-     
-#Adding code to a button, so that when clicked, it pings a system
-# $WPFbutton.Add_Click({ Test-connection -count 1 -ComputerName $WPFtextBox.Text
-# })
-#===========================================================================
-# Shows the form
-#===========================================================================
+
+
+#Oracle Installers
+Function installOra32{
+start powershell ((Split-Path $MyInvocation.InvocationName) + ".\oracleinstaller32.ps1")}
+$WPFOrainstall32.Add_Click({ 
+$WPFloaflog.Text = "Installing Oracle 32"
+})
+Function installOra64{
+start powershell ((Split-Path $MyInvocation.InvocationName) + ".\oracleinstaller64.ps1")}
+$WPFOrainstall64.Add_Click({ 
+$WPFloaflog.Text = "Installing Oracle 64"
+})
+
+
+#Check Oracle
+Function chkOra{
+tnsping}
+$WPFOracheck.Add_Click({ 
+$WPFloaflog.Text = chkOra 
+})
+
+
+#Bitlocker Check
+Function chkBit{
+manage-bde c: -protectors -get}
+$WPFBitcheck.Add_Click({ 
+$WPFloaflog.Text = chkBit
+})
+
+
+#Bios Check
+Function chkBios{
+Write-Host "Bios Version"
+wmic bios get smbiosbiosversion
+wmic bios get serialnumber}
+$WPFBioscheck.Add_Click({ 
+$WPFloaflog.Text = chkBios 
+})
+
+
+#Office Updaters
+Function uoff32{
+$ScriptPath = Split-Path $MyInvocation.InvocationName
+& ".\Data\Update Office to Semi Annual Channel.bat"
+}
+$WPFOupdate32.Add_Click({ 
+$WPFloaflog.Text = uoff32
+})
+Function uoff64{
+$ScriptPath = Split-Path $MyInvocation.InvocationName
+& ".\Data\Update Office to Semi Annual Channel - 64bit.bat"
+}
+$WPFOupdate64.Add_Click({ 
+$WPFloaflog.Text = uoff32
+})
+
+
+#Run HIPA
+Function HipaExe{
+$ScriptPath = Split-Path $MyInvocation.InvocationName
+& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\2.Drivers\sp94976.exe"}
+$WPFRunhipa.Add_Click({ 
+$WPFloaflog.Text = "Running Hipa"
+HipaExe
+})
+
+#-------------------------
+#Launch Form
+#-------------------------
 write-host "To show the form, run the following" -ForegroundColor Cyan
 $Form.ShowDialog() | out-null

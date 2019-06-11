@@ -13,6 +13,5 @@ switch ($Type){
 start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\loafsetup.ps1")}
 
 "u" {#Script Path for Oracle Client x64
-start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\loafuninstall.ps1")}
-
+start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\loafuninstaller.ps1")}
 }
