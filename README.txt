@@ -1,4 +1,4 @@
-Run LoafScript in PowerShell.
+Run LoafGui in PowerShell.
 Select desired options for install.
 #############################################
 Feats. 
@@ -10,7 +10,6 @@ Feats.
 -HIPA launcher
 -Checks BIOS version/password
 -Runs Office Updater (Still need to launch Word to force update!)
--Option to restart computer
 
-V3 5/22/2019
+V4 6/11/2019
 --------------------------------------------- 

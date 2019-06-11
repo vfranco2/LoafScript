@@ -11,7 +11,7 @@ $inputXML = @"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Image HorizontalAlignment="Left" Height="65" Margin="10,10,0,0" VerticalAlignment="Top" Width="65" Source="H:\LoafGui\LoafIcon.png"/>
+        <Image HorizontalAlignment="Left" Height="65" Margin="10,10,0,0" VerticalAlignment="Top" Width="65" Source="H:\LoafScript\Data\LoafIcon.png"/>
         <TextBlock HorizontalAlignment="Left" Margin="43,85,0,0" TextWrapping="Wrap" Text="Install Oracle" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="42,106,0,0" TextWrapping="Wrap" Text="Check Oracle" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="30,127,0,0" TextWrapping="Wrap" Text="Check Bitlocker" VerticalAlignment="Top"/>
