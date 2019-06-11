@@ -93,7 +93,7 @@ installOra64
 
 #Check Oracle
 Function chkOra{
-tnsping}
+tnsping adtldev}
 $WPFOracheck.Add_Click({ 
 $WPFloaflog.Text = chkOra 
 })
