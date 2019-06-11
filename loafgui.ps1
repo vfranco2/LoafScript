@@ -78,14 +78,16 @@ Get-FormVariables
 
 #Oracle Installers
 Function installOra32{
-start powershell ((Split-Path $MyInvocation.InvocationName) + ".\oracleinstaller32.ps1")}
+start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oracleinstaller32.ps1")}
 $WPFOrainstall32.Add_Click({ 
 $WPFloaflog.Text = "Installing Oracle 32"
+installOra32
 })
 Function installOra64{
-start powershell ((Split-Path $MyInvocation.InvocationName) + ".\oracleinstaller64.ps1")}
+start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oracleinstaller64.ps1")}
 $WPFOrainstall64.Add_Click({ 
 $WPFloaflog.Text = "Installing Oracle 64"
+installOra64
 })
 
 
