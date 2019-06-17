@@ -1,3 +1,0 @@
-1.) to open up uninstall window enter "appwiz.cpl"
-2.) $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-This is for the enviroment refresh but it is for paths, so I think we can make it point to the bios path on the desktop as you see on test_scripter

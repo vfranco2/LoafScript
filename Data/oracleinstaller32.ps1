@@ -12,7 +12,7 @@ $ScriptPath = Split-Path $MyInvocation.InvocationName
 #Checks to see if Oracle Path Exists
 try{
 If(Test-Path -path "C:\Oracle\product\12.1.0\dbhome_1\network\admin"){
-xcopy ".\Data\*ora" "C:\Oracle\product\12.1.0\dbhome_1\network\admin" /y
+xcopy ".\Data\*.ora" "C:\Oracle\product\12.1.0\dbhome_1\network\admin" /y
 }
 Else{Write-Errror "ERROR STEP 3: Oracle file not found or not installed"
 }
@@ -21,19 +21,4 @@ catch{
 "Couldn't copy ora files"
 }
 
-
-#Check Oracle
-do{$Type = Read-Host -Prompt 'Check Oracle?
-y=yes
-n=no
-'}
-until(($Type -eq "y") -or ($Type -eq "n"))
-
-switch ($Type){
-"y" {#Yes
-start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\loafsetup.ps1")}
-
-"n" {#No
-Write-Host "Oracle check skipped"}
-}
 pause

@@ -3,7 +3,7 @@
 
 #This Uninstaller works for removing Oracle from a system rather reimaging it. 
 
-write-host "CLOSE THIS WINDOW IF YOU WANT TO KEEP YOUR ORACLE!!"
+write-host "CLOSE THIS WINDOW IF YOU WANT TO KEEP YOUR ORACLE!!" -ForegroundColor Yellow
 
 pause
 pause
