@@ -11,26 +11,21 @@ $inputXML = @"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="400">
     <Grid>
-        <Image HorizontalAlignment="Left" Height="65" Margin="10,10,0,0" VerticalAlignment="Top" Width="65" Source="\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\Loafscript\Data\LoafIcon.png"/>
-        <TextBlock HorizontalAlignment="Left" Margin="43,85,0,0" TextWrapping="Wrap" Text="Install Oracle" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="42,106,0,0" TextWrapping="Wrap" Text="Check Oracle" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="30,127,0,0" TextWrapping="Wrap" Text="Check Bitlocker" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="12,148,0,0" TextWrapping="Wrap" Text="Check Bios Version" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="9,169,0,0" TextWrapping="Wrap" Text="Run Office Updater" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="61,190,0,0" TextWrapping="Wrap" Text="Run HIPA" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="22,295,0,0" TextWrapping="Wrap" Text="Uninstall Oracle" VerticalAlignment="Top" Width="88"/>
-        <TextBlock HorizontalAlignment="Left" Margin="22,316,0,0" TextWrapping="Wrap" Text="Uninstall Office" VerticalAlignment="Top" Width="88"/>
-        <Button x:Name="Orainstall32" Content="32" HorizontalAlignment="Left" Height="16" Margin="116,85,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="Orainstall64" Content="64" HorizontalAlignment="Left" Height="16" Margin="141,85,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="Oracheck" Content="" HorizontalAlignment="Left" Height="16" Margin="116,106,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="Bitcheck" Content="" HorizontalAlignment="Left" Height="16" Margin="116,127,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="Bioscheck" Content="" HorizontalAlignment="Left" Height="16" Margin="116,148,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="Oupdate32" Content="32" HorizontalAlignment="Left" Height="16" Margin="116,169,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="Oupdate64" Content="64" HorizontalAlignment="Left" Height="16" Margin="141,169,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="Runhipa" Content="" HorizontalAlignment="Left" Height="16" Margin="116,190,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="Orauninstall" Content="" HorizontalAlignment="Left" Height="16" Margin="116,295,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="Officeuninstall" Content="" HorizontalAlignment="Left" Height="16" Margin="116,316,0,0" VerticalAlignment="Top" Width="20"/>
-        <TextBox x:Name="Loaflog" HorizontalAlignment="Left" Height="363" Margin="183,21,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="198"/>
+        <Image HorizontalAlignment="Left" Height="65" Margin="10,10,0,0" VerticalAlignment="Top" Width="65" Source="H:\LoafGui\LoafIcon.png"/>
+        <Button x:Name="Orainstall32" Content="Install Oracle 32" HorizontalAlignment="Left" Height="18" Margin="30,84,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Orainstall64" Content="Install Oracle 64" HorizontalAlignment="Left" Height="18" Margin="30,107,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Oracheck" Content="Check Oracle" HorizontalAlignment="Left" Height="18" Margin="30,130,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Bitcheck" Content="Check Bitlocker" HorizontalAlignment="Left" Height="18" Margin="30,153,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Bioscheck" Content="Check Bios" HorizontalAlignment="Left" Height="18" Margin="30,176,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Oupdate32" Content="Update Office 32" HorizontalAlignment="Left" Height="18" Margin="30,199,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Oupdate64" Content="Update Office 64" HorizontalAlignment="Left" Height="18" Margin="30,222,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Runhipa" Content="Run HIPA" HorizontalAlignment="Left" Height="18" Margin="30,245,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Cabinstall" Content="Cab Copier" HorizontalAlignment="Left" Height="18" Margin="30,268,0,0" VerticalAlignment="Top" Width="106"/>
+
+        <Button x:Name="Orauninstall" Content="Uninstall Oracle" HorizontalAlignment="Left" Height="18" Margin="30,343,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Progfeat" Content="Programs/Features" HorizontalAlignment="Left" Height="18" Margin="30,366,0,0" VerticalAlignment="Top" Width="106"/>
+        
+        <TextBox x:Name="Loaflog" HorizontalAlignment="Left" Height="363" Margin="151,21,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="230"/>
     </Grid>
 </Window>
 "@ 
@@ -49,6 +44,7 @@ catch{
     throw
 }
  
+
 #-------------------------
 # Load XAML Objects In PowerShell
 #-------------------------
@@ -143,6 +139,17 @@ $WPFLoaflog.Text = "Running Hipa"
 HipaExe
 })
 
+
+#Copy Cab Installer files to desktop
+Function Cabin{
+Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Manual SW installations\Pega\CabInstaller" -Destination "C:\Users\vfranco1\Desktop" -Recurse
+}
+$WPFCabinstall.Add_Click({ 
+$WPFLoaflog.Text = "Running Cab Copy"
+Cabin
+})
+
+
 #Uninstall Oracle
 Function UnOra{
 start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\loafuninoracle.ps1")}
@@ -151,11 +158,12 @@ $WPFLoaflog.Text = "Uninstalling Oracle"
 UnOra
 })
 
-#Uninstall Office
-Function UnOffice{}
-$WPFOrauninstall.Add_Click({ 
-$WPFLoaflog.Text = "Running Hipa"
-UnOffice
+#Launch programs & features (usually for MS Office)
+Function UnProg{
+appwiz.cpl}
+$WPFProgfeat.Add_Click({ 
+$WPFLoaflog.Text = "Launching Programs & Features"
+UnProg
 })
 
 
