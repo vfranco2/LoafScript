@@ -20,11 +20,10 @@ $inputXML = @"
         <Button x:Name="Oupdate32" Content="Update Office 32" HorizontalAlignment="Left" Height="18" Margin="30,199,0,0" VerticalAlignment="Top" Width="106"/>
         <Button x:Name="Oupdate64" Content="Update Office 64" HorizontalAlignment="Left" Height="18" Margin="30,222,0,0" VerticalAlignment="Top" Width="106"/>
         <Button x:Name="Runhipa" Content="Run HIPA" HorizontalAlignment="Left" Height="18" Margin="30,245,0,0" VerticalAlignment="Top" Width="106"/>
-        <Button x:Name="Cabinstall" Content="Cab Copier" HorizontalAlignment="Left" Height="18" Margin="30,268,0,0" VerticalAlignment="Top" Width="106"/>
-
         <Button x:Name="Orauninstall" Content="Uninstall Oracle" HorizontalAlignment="Left" Height="18" Margin="30,343,0,0" VerticalAlignment="Top" Width="106"/>
-        <Button x:Name="Progfeat" Content="Programs/Features" HorizontalAlignment="Left" Height="18" Margin="30,366,0,0" VerticalAlignment="Top" Width="106"/>
-        
+        <Button x:Name="Progfeat" Content="Uninstall Office" HorizontalAlignment="Left" Height="18" Margin="30,366,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="Cabinstall" Content="Cab Installer" HorizontalAlignment="Left" Height="18" Margin="30,268,0,0" VerticalAlignment="Top" Width="106"/>
+        <Button x:Name="BiosPass" Content="BIOS Password" HorizontalAlignment="Left" Height="18" Margin="30,291,0,0" VerticalAlignment="Top" Width="106"/>
         <TextBox x:Name="Loaflog" HorizontalAlignment="Left" Height="363" Margin="151,21,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="230"/>
     </Grid>
 </Window>
@@ -147,6 +146,28 @@ Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Manual SW installations\P
 $WPFCabinstall.Add_Click({ 
 $WPFLoaflog.Text = "Running Cab Copy"
 Cabin
+})
+
+#Bios Password
+Function BiosPW{
+#Fetch Hostname
+$HostName=$env:UserName
+#Moves Bios and has check if it already exists 
+Try{
+Copy-Item "H:\LoafScript\Data\BiosPass" -Destination "C:\Users\$HostName\Desktop" -Recurse -ErrorAction Stop
+}
+Catch{
+"The file already is copied to the desktop!"
+}
+
+Set-Location -Path "C:\Users\$HostName\Desktop\BiosPass"
+start-process "cmd.exe" "/c .\BiosPw.Bat"
+Set-Location -Path "C:\Users\$HostName"
+Remove-Item "C:\Users\$HostName\Desktop\BiosPass" –Force
+}
+$WPFBiosPass.Add_Click({
+$WPFLoaflog.Text = "Installing BIOS Password"
+BiosPW
 })
 
 

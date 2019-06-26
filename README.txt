@@ -9,8 +9,9 @@ Feats.
 -Checks Bitlocker
 -HIPA launcher
 -Checks BIOS version/password
+-Set BIOS PW
 -Runs Office Updater (Still need to launch Word to force update!)
 -Uninstalls Oracle
 
-V5 6/17/2019
+V6 6/26/2019
 --------------------------------------------- 
