@@ -67,6 +67,7 @@ Get-FormVariables
 #-------------------------
 
 #Oracle Installers
+#In Data
 Function installOra32{
 start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oracleinstaller32.ps1")}
 $WPFOrainstall32.Add_Click({ 
@@ -113,6 +114,7 @@ $WPFLoaflog.Text = chkBios
 
 
 #Office Updaters
+#In Data
 Function uoff32{
 $ScriptPath = Split-Path $MyInvocation.InvocationName
 & ".\Data\Update Office to Semi Annual Channel.bat"
@@ -130,9 +132,10 @@ $WPFLoaflog.Text = uoff32
 
 
 #Run HIPA
+#In NOC
 Function HipaExe{
 $ScriptPath = Split-Path $MyInvocation.InvocationName
-& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\2.Drivers\sp94976.exe"}
+& "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\Loafscript\Data\sp97054.exe"}
 $WPFRunhipa.Add_Click({ 
 $WPFLoaflog.Text = "Running Hipa"
 HipaExe
@@ -140,6 +143,7 @@ HipaExe
 
 
 #Copy Cab Installer files to desktop
+#In NOC
 Function Cabin{
 Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Manual SW installations\Pega\CabInstaller" -Destination "C:\Users\vfranco1\Desktop" -Recurse
 }
@@ -172,6 +176,7 @@ BiosPW
 
 
 #Uninstall Oracle
+#In Data
 Function UnOra{
 start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\loafuninoracle.ps1")}
 $WPFOrauninstall.Add_Click({ 
