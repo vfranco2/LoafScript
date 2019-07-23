@@ -1,4 +1,4 @@
-﻿#LoafScript built by Vlad Franco and Jag Singh
+﻿#LoafScript built by Vlad Franco and Jag Singh 
 
 
 $inputXML = @"
