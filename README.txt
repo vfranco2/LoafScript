@@ -1,17 +1,19 @@
 Run LoafGui in PowerShell.
-Select desired options for install.
+Select desired options.
 #############################################
-Feats. 
--Adds respective oracle client 
--Checks Oracle instllation, pings Oracle
--Sets Environment Varibles
--Checks and Adds TNS files (.Ora)
--Checks Bitlocker
--HIPA launcher
--Checks BIOS version/password
--Set BIOS PW
--Runs Office Updater (Still need to launch Word to force update!)
--Uninstalls Oracle
+Featured functions:
 
-V6 6/26/2019
+-Adds respective oracle client
+-Copies CAB Installer files for Pega
+-Sets BIOS Password
+-Updates Office x32 or x64
+-Copies required Admin Process data
+-Runs HP Image Assistant
+-Checks Oracle install (tnsping adtlev)
+-Checks Bitlocker status
+-Checks BIOS version
+-Uninstalls Oracle
+-Uninstalls Microsoft Office
+
+V7 7/23/2019
 --------------------------------------------- 
