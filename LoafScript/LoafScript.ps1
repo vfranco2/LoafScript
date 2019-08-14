@@ -86,7 +86,7 @@ Get-FormVariables
 #Installer Functions
 
 #Oracle Installers
-#In Data
+#In Data - Streamline soon
 Function installOra32{
 start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oracleinstaller32.ps1")}
 $WPFOrainstall32.Add_Click({ 
@@ -132,9 +132,9 @@ Catch{
 
 
 Set-Location -Path "C:\Users\$HostName\Desktop\BiosPass"
-start-process "cmd.exe" "/c .\BiosPw.Bat"
+start-process "cmd.exe" "/c .\BiosPw.Bat" -Wait
 Set-Location -Path "C:\Users\$HostName"
-Remove-Item "C:\Users\$HostName\Desktop\BiosPass" –Force
+Remove-Item "C:\Users\$HostName\Desktop\BiosPass" -Recurse –Force
 }
 $WPFBiosPass.Add_Click({
 $WPFLoaflog.Text = "Installing BIOS Password"
