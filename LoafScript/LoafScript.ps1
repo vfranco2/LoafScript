@@ -112,6 +112,7 @@ Catch{
 }
 Set-Location -Path "C:\Intel\CabInstaller"
 start-process "cmd.exe" "/c .\install.Bat"
+Set-Location $PSScriptRoot
 }
 $WPFCabinstall.Add_Click({ 
 $WPFLoaflog.Text = "Running Cab Installer"
@@ -135,6 +136,7 @@ Set-Location -Path "C:\Users\$HostName\Desktop\BiosPass"
 start-process "cmd.exe" "/c .\BiosPw.Bat" -Wait
 Set-Location -Path "C:\Users\$HostName"
 Remove-Item "C:\Users\$HostName\Desktop\BiosPass" -Recurse –Force
+Set-Location $PSScriptRoot
 }
 $WPFBiosPass.Add_Click({
 $WPFLoaflog.Text = "Installing BIOS Password"
