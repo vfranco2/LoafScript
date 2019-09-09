@@ -1,10 +1,10 @@
-Run LoafGui in PowerShell.
-Select desired options.
-#############################################
+Copy LoafScriptMaster to your H drive for use on any machine. May require copying folder from H drive to local C drive to run program.
+Right click LoafScript.ps1 and run with PowerShell to launch.
+
 Featured functions:
 
 -Adds respective oracle client
--CAB Installer for Pega
+-Copies CAB Installer files for Pega
 -Sets BIOS Password
 -Updates Office x32 or x64
 -Copies required Admin Process data
@@ -15,5 +15,5 @@ Featured functions:
 -Uninstalls Oracle
 -Uninstalls Microsoft Office
 
-V8 8/7/2019
---------------------------------------------- 
+V2.3.0 9/9/2019
+--------------------------------------------

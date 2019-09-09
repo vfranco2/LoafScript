@@ -2,10 +2,10 @@
 #This script is designed to streamline the new PC preparation process.
 
 #----------------------
-#NOC Functions:
+#Functions in Intern Refresh:
 #CAB, BIOS PW, Admin Process, HPIA
 
-#DATA Functions:
+#Functions in local Data folder:
 #Oracle Install, Office Updater, Oracle Uninstall
 #----------------------
 
@@ -86,7 +86,7 @@ Get-FormVariables
 #Installer Functions
 
 #Oracle Installers
-#In Data - Streamline soon
+#Launcher in local Data, files in Intern Refresh
 Function installOra32{
 start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oracleinstaller32.ps1")}
 $WPFOrainstall32.Add_Click({ 
@@ -102,10 +102,10 @@ installOra64
 
 
 #Cab Installer for Pega
-#In NOC
+#Files in Intern Refresh
 Function Cabin{
 Try{
-Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Manual SW installations\Pega\CabInstaller" -Destination "C:\Intel" -Recurse -ErrorAction Stop
+Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\Data\CabInstaller" -Destination "C:\Intel" -Recurse -ErrorAction Stop
 }
 Catch{
 "The file already is copied to the Intel folder!"
@@ -121,7 +121,7 @@ Cabin
 
 
 #Bios Password
-#In NOC
+#Files in Intern Refresh
 Function BiosPW{
 $HostName=$env:UserName
 Try{
@@ -145,7 +145,7 @@ BiosPW
 
 
 #Office Updaters
-#In Data
+#Files in local Data
 Function uoff32{
 $ScriptPath = Split-Path $MyInvocation.InvocationName
 & ".\Data\Update Office to Semi Annual Channel.bat"
@@ -163,7 +163,7 @@ $WPFLoaflog.Text = uoff32
 
 
 #Admin Process DLL
-#In NOC
+#Files in Intern refresh
 Function APDLL{
 #Fetch Hostname
 $HostName=$env:UserName
@@ -181,7 +181,7 @@ APDLL
 
 
 #Run HPIA
-#In NOC
+#Files in Intern Refresh
 Function HpiaExe{
 $ScriptPath = Split-Path $MyInvocation.InvocationName
 & "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\Loafscript\Data\sp97054.exe"}
@@ -229,7 +229,7 @@ $WPFLoaflog.Text = chkBios
 #Uninstaller functions
 
 #Uninstall Oracle
-#In Data
+#Files in local Data
 Function UnOra{
 start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\loafuninoracle.ps1")}
 $WPFOrauninstall.Add_Click({ 
