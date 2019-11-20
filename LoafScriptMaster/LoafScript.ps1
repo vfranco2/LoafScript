@@ -18,7 +18,7 @@ $inputXML = @"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoafGui"
         mc:Ignorable="d"
-        Title="LoafScript 2.4.0" Height="590" Width="400">
+        Title="LoafScript 2.4.1" Height="590" Width="400">
     <TabControl>
         <TabItem Header="Setup">
             <Grid>
@@ -118,6 +118,15 @@ start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oracleinst
 $WPFOrainstall64.Add_Click({ 
 $WPFLoaflog.Text = "Installing Oracle 64"
 installOra64
+})
+
+#Oracle files only
+#Launcher in local Data, files in Intern Refresh
+Function installOrafiles{
+start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oraclefiles.ps1")}
+$WPFOraproperties.Add_Click({ 
+$WPFLoaflog.Text = "Installing Oracle Env and .ora files"
+installOraFiles
 })
 
 #Bios Password
