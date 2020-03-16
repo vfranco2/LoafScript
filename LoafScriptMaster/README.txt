@@ -1,13 +1,10 @@
 Copy LoafScriptMaster to your H drive for use on any machine. May require copying folder from H drive to local C drive to run program.
 Right click LoafScript.ps1 and run with PowerShell to launch.
 
-Featured functions:
+Functions:
 
--Adds respective oracle client
 -Option for Oracle enviro variables/.ora files only
--Copies CAB Installer files for Pega
 -Sets BIOS Password
--Updates Office x32 or x64
 -Copies required Admin Process data
 -Runs HP Image Assistant
 -Checks Oracle install (tnsping adtlev)
@@ -19,5 +16,5 @@ Featured functions:
 -Unlocks background
 -Forces high performance mode
 
-V2.4.1 11/20/2019
+V2.5.0 03/16/2020
 --------------------------------------------
