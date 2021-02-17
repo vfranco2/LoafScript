@@ -6,15 +6,20 @@ Functions:
 -Option for Oracle enviro variables/.ora files only
 -Sets BIOS Password
 -Copies required Admin Process data
--Runs HP Image Assistant
+-Runs HP Image Assistant (newest in _Post Image)
+-Runs Windows Update Assistant
+-Installs Oracle 32bit
+-Installs Oracle 64bit
+
 -Checks Oracle install (tnsping adtlev)
 -Checks Bitlocker status
 -Checks BIOS version
+
 -Uninstalls Oracle
 -Uninstalls Microsoft Office
 -Forces Light/Dark theme
 -Unlocks background
 -Forces high performance mode
 
-V2.5.0 03/16/2020
+V2.6.4 2/17/2021
 --------------------------------------------
