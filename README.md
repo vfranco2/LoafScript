@@ -21,5 +21,5 @@ Functions:
 -Unlocks background
 -Forces high performance mode
 
-V2.6.4 2/17/2021
+V2.6.5 3/4/2021
 --------------------------------------------

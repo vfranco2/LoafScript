@@ -18,7 +18,7 @@ $inputXML = @"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoafGui"
         mc:Ignorable="d"
-        Title="LoafScript 2.6.4" Height="499" Width="400">
+        Title="LoafScript 2.6.5" Height="499" Width="400">
     <TabControl>
         <TabItem Header="Setup">
             <Grid>
@@ -154,7 +154,7 @@ $WPFAdminprocess.Add_Click({
 #Run HPIA
 #Files in Intern Refresh
 Function HpiaExe{
-    $NewHpia = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\*.exe" -Filter "*sp*" 
+    $NewHpia = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\*.exe" -Filter "*hpia*" 
     $ScriptPath = Split-Path $MyInvocation.InvocationName
     & $NewHpia
 }
