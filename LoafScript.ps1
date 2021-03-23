@@ -1,95 +1,64 @@
-﻿#LoafScript built by Vlad Franco and Jagjot Singh 
+﻿#LoafScript built by Vlad Franco and Jagjot Singh
 #This script is designed to streamline the new PC preparation process.
 
 #----------------------
-#Functions in Intern Refresh:
+#XAML User Interface file found in LocalData folder
+
+#Functions in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData (Referred to as RemoteData):
 #BIOS PW, Admin Process, HPIA, Windows Update Assistant
 
-#Functions in local Data folder:
+#Functions in LocalData folder (Found in the directory your LoafScript is):
 #Oracle Install, Office Updater, Oracle Uninstall
 #----------------------
 
 
-$inputXML = @"
-<Window x:Class="LoafGui.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LoafGui"
-        mc:Ignorable="d"
-        Title="LoafScript 2.6.5" Height="499" Width="400">
-    <TabControl>
-        <TabItem Header="Setup">
-            <Grid>
-                <Image HorizontalAlignment="Left" Height="65" Margin="10,10,0,0" VerticalAlignment="Top" Width="65" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/Data/LoafIcon.png"/>
-
-                <GroupBox Header="Installs" HorizontalAlignment="Left" Height="185" Margin="10,80,0,0" VerticalAlignment="Top" Width="132"/>
-                <Button x:Name="Oraproperties" Content="Oracle TNS/Env" HorizontalAlignment="Left" Height="18" Margin="20,99,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="BiosPass" Content="BIOS PW" HorizontalAlignment="Left" Height="18" Margin="20,122,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Adminprocess" Content="Admin Process" HorizontalAlignment="Left" Height="18" Margin="20,145,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Runhpia" Content="Run HPIA" HorizontalAlignment="Left" Height="18" Margin="20,168,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Runupdateassistant" Content="Windows Update" HorizontalAlignment="Left" Height="18" Margin="20,191,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Orainstall32" Content="Oracle 32" HorizontalAlignment="Left" Height="18" Margin="20,214,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Orainstall64" Content="Oracle 64" HorizontalAlignment="Left" Height="18" Margin="20,237,0,0" VerticalAlignment="Top" Width="106"/>
-
-                <GroupBox Header="Verification" HorizontalAlignment="Left" Height="90" Margin="10,267,0,0" VerticalAlignment="Top" Width="132"/>
-                <Button x:Name="Oracheck" Content="Check Oracle" HorizontalAlignment="Left" Height="18" Margin="20,286,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Bitcheck" Content="Check Bitlocker" HorizontalAlignment="Left" Height="18" Margin="20,309,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Bioscheck" Content="Check Bios" HorizontalAlignment="Left" Height="18" Margin="20,332,0,0" VerticalAlignment="Top" Width="106"/>
-
-                <GroupBox Header="Uninstalls" HorizontalAlignment="Left" Height="69" Margin="10,362,0,0" VerticalAlignment="Top" Width="132"/>
-                <Button x:Name="Orauninstall" Content="Oracle" HorizontalAlignment="Left" Height="18" Margin="20,382,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Progfeat" Content="Office" HorizontalAlignment="Left" Height="18" Margin="20,405,0,0" VerticalAlignment="Top" Width="106"/>
-
-                <TextBox x:Name="Loaflog" HorizontalAlignment="Left" Height="421" Margin="147,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="230"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Personalization">
-            <Grid>
-                <Image HorizontalAlignment="Left" Height="65" Margin="10,10,0,0" VerticalAlignment="Top" Width="65" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/Data/LoafIcon.png"/>
-
-                <GroupBox Header="Personalization" HorizontalAlignment="Left" Height="119" Margin="10,80,0,0" VerticalAlignment="Top" Width="132"/>
-                <Button x:Name="Dkinstall" Content="Dark Mode" HorizontalAlignment="Left" Height="18" Margin="20,99,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Ltinstall" Content="Light Mode" HorizontalAlignment="Left" Height="18" Margin="20,122,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Bginstall" Content="Backgrounds" HorizontalAlignment="Left" Height="18" Margin="20,145,0,0" VerticalAlignment="Top" Width="106"/>
-                <Button x:Name="Pwinstall" Content="High Performance" HorizontalAlignment="Left" Height="18" Margin="20,168,0,0" VerticalAlignment="Top" Width="106"/>
-
-                <TextBox x:Name="Loaflog2" HorizontalAlignment="Left" Height="421" Margin="147,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="230"/>
-            </Grid>
-        </TabItem>
-    </TabControl>
-</Window>
-"@ 
+#-------------------------
+# Load XAML UI File From LocalData
+#-------------------------
+$CurrentVersion = "3.0.0"
+#$xamlFile = ".\LocalData\LoafScriptUI.xaml"
+$xamlFile = ".\LocalData\LoafScriptUIBeta.xaml"
+$inputXML = Get-Content $xamlFile -Raw
 
 $inputXML = $inputXML -replace 'mc:Ignorable="d"','' -replace "x:N",'N' -replace '^<Win.*', '<Window'
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [xml]$XAML = $inputXML
 #Read XAML
- 
+
 $reader=(New-Object System.Xml.XmlNodeReader $xaml)
 try{
     $Form=[Windows.Markup.XamlReader]::Load( $reader )
 }
 catch{
     Write-Warning "Unable to parse XML, with error: $($Error[0])`n Ensure that there are NO SelectionChanged or TextChanged properties in your textboxes (PowerShell cannot process them)"
+     #pause
     throw
+    pause
 }
  
-
+ 
 #-------------------------
 # Load XAML Objects In PowerShell
 #-------------------------
   
 $xaml.SelectNodes("//*[@Name]") | %{"trying item $($_.Name)";
-    try {Set-Variable -Name "WPF$($_.Name)" -Value $Form.FindName($_.Name) -ErrorAction Stop}
-    catch{throw}
+    try {
+        Set-Variable -Name "WPF$($_.Name)" -Value $Form.FindName($_.Name) -ErrorAction Stop
     }
- 
+    catch{throw}
+}
+
+
+#-------------------------
+# Display Form Variables In Script (TextBoxes, Buttons, Etc)
+#-------------------------
+
 Function Get-FormVariables{
-if ($global:ReadmeDisplay -ne $true){Write-host "If you need to reference this display again, run Get-FormVariables" -ForegroundColor Yellow;$global:ReadmeDisplay=$true}
-write-host "Found the following interactable elements from our form" -ForegroundColor Cyan
-get-variable WPF*
+    if ($global:ReadmeDisplay -ne $true){
+        Write-host "If you need to reference this display again, run Get-FormVariables" -ForegroundColor Yellow;$global:ReadmeDisplay=$true
+    }
+    write-host "Found the following interactable elements from our form" -ForegroundColor Cyan
+    get-variable WPF*
 }
  
 Get-FormVariables
@@ -100,27 +69,63 @@ Get-FormVariables
 #-------------------------
 
 #-------------------------
+#Updater Functions
+#-------------------------
+#Checks the LoafScript folder in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\ (Inside the parent LoafScript folder!)
+#If the version of this script does not match, it prompts the user
+Function downloadNewLoafScript{
+    $CurrentLoaf = "LoafScript "+$CurrentVersion
+    $WPFLoafGuiMainWindow.Title = $CurrentLoaf
+    $FreshLoaf = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
+    $CompareLoaf = $FreshLoaf.ToString()
+    $CompareLoaf = $CompareLoaf.substring(70)
+
+    if ($CompareLoaf -ne $CurrentLoaf){
+        $WPFLoafScriptUpdateText.Visibility="visible"
+        $WPFLoafScriptUpdater.Visibility="visible"
+    }
+}
+downloadNewLoafScript
+$WPFLoafScriptUpdater.Add_Click({ 
+    #$WPFLoaflog.Text = "Lol"
+    $DownloadLoaf = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
+    $WPFLoaflog.Text = $DownloadLoaf
+    Try{
+        $HostName=$env:UserName
+        #Copy-Item $DownloadLoaf -Destination "C:\Users\$HostName\Desktop" -Recurse -ErrorAction Stop
+        Copy-Item $DownloadLoaf -Destination "..\" -Recurse -ErrorAction Stop
+        $InstallLocation = Get-Item -Path "..\"
+        $WPFLoaflog.Text = "Downloaded new version of LoafScript to: " + $InstallLocation + " - Navigate to the new install folder and relaunch the script."
+    }
+    Catch{
+        $WPFLoaflog.Text = "$($Error[0])"
+    }
+    
+})
+
+#-------------------------
 #Installer Functions
 #-------------------------
 
 #Oracle files only
-#Launcher in local Data, files in Intern Refresh
+#Launcher in LocalData, files in RemoteData
 Function installOrafiles{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oraclefiles.ps1")}
+    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oraclefiles.ps1")
+}
 $WPFOraproperties.Add_Click({ 
-    $WPFLoaflog.Text = "Installing Oracle Env and .ora files"
+    $WPFLoaflog.Text = "Installing Oracle Environment Variables and .ora files"
     installOraFiles
 })
 
 #Bios Password
-#Files in Intern Refresh
+#Files in RemoteData
 Function BiosPW{
     $HostName=$env:UserName
     Try{
-        Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\Data\BiosPass" -Destination "C:\Users\$HostName\Desktop" -Recurse -ErrorAction Stop
+        Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\BiosPass" -Destination "C:\Users\$HostName\Desktop" -Recurse -ErrorAction Stop
     }
     Catch{
-    "The file already is copied to the desktop!"
+        "The file already is copied to the desktop! Or there's an error or something."
     }
 
     Set-Location -Path "C:\Users\$HostName\Desktop\BiosPass"
@@ -135,13 +140,13 @@ $WPFBiosPass.Add_Click({
 })
 
 #Admin Process DLL
-#Files in Intern refresh
+#Files in RemoteData
 Function APDLL{
     #Fetch Hostname
     $HostName=$env:UserName
     #Moves Bios and has check if it already exists 
     Try{
-        Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\Loafscript\Data\jvm.dll" -Destination "C:\Program Files (x86)\Oracle\JInitiator 1.3.1.29\bin\hotspot" -Recurse -ErrorAction Stop
+        Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\Loafscript\RemoteData\jvm.dll" -Destination "C:\Program Files (x86)\Oracle\JInitiator 1.3.1.29\bin\hotspot" -Recurse -ErrorAction Stop
     }
     Catch{
         "Error occured!"}
@@ -152,7 +157,7 @@ $WPFAdminprocess.Add_Click({
 })
 
 #Run HPIA
-#Files in Intern Refresh
+#Files in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\
 Function HpiaExe{
     $NewHpia = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\*.exe" -Filter "*hpia*" 
     $ScriptPath = Split-Path $MyInvocation.InvocationName
@@ -164,7 +169,7 @@ $WPFRunhpia.Add_Click({
 })
 
 #Run Windows Update Assistant
-#Files in _Post Image/W10
+#Files in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\
 Function WinUpdate{
     $NewWindows10 = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\Windows10Upgrade9252.exe"
     & $NewWindows10
@@ -175,10 +180,10 @@ $WPFRunupdateassistant.Add_Click({
 })
 
 #Oracle Installers
-#Launcher in local Data, files in Intern Refresh
+#Launcher in LocalData, files in RemoteData
 #32bit Installer
 Function installOra32{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oracleinstaller32.ps1")
+    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstaller32.ps1")
 }
 $WPFOrainstall32.Add_Click({ 
     $WPFLoaflog.Text = "Installing Oracle 32"
@@ -187,7 +192,7 @@ $WPFOrainstall32.Add_Click({
 
 #64bit installer
 Function installOra64{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\oracleinstaller64.ps1")
+    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstaller64.ps1")
 }
 $WPFOrainstall64.Add_Click({ 
     $WPFLoaflog.Text = "Installing Oracle 64"
@@ -231,9 +236,10 @@ $WPFBioscheck.Add_Click({
 #-------------------------
 
 #Uninstall Oracle
-#Files in local Data
+#Files in LocalData
 Function UnOra{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\Data\loafuninoracle.ps1")}
+    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\loafuninoracle.ps1")
+}
 $WPFOrauninstall.Add_Click({ 
     $WPFLoaflog.Text = "Uninstalling Oracle"
     UnOra
@@ -241,7 +247,8 @@ $WPFOrauninstall.Add_Click({
 
 #Launch programs & features (usually for MS Office)
 Function UnProg{
-    appwiz.cpl}
+    appwiz.cpl
+}
 $WPFProgfeat.Add_Click({ 
     $WPFLoaflog.Text = "Launching Programs & Features"
     UnProg
@@ -322,32 +329,6 @@ $WPFBginstall.Add_Click({
     Bgforce
 })
 
-#Force Unlock Power Options
-Function PowerOpen{
-#powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
-#powercfg -duplicatescheme 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
-#powercfg -duplicatescheme a1841308-3541-4fab-bc81-f71556f20b4a
-
-    IF(!(Test-Path $registryPathPw)) {
-        New-Item -Path $registryPathPw -Force | Out-Null
-        New-ItemProperty -Path $registryPathPw -Name $NamePW -Value 0 -PropertyType DWORD -Force | Out-Null
-        write-host "Local Machine key added, edited, power options unlocked. Please reboot your machine."}
-    ELSE {
-        New-ItemProperty -Path $registryPathPw -Name $NamePW -Value 0 -PropertyType DWORD -Force | Out-Null
-        write-host "Local Machine key edited, power options unlocked. Please reboot your machine"}
-
-    IF(!(Test-Path $registryPathPw2)) {
-        New-Item -Path $registryPathPw2 -Force | Out-Null
-        New-ItemProperty -Path $registryPathPw2 -Name $NamePW2 -Value 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c -PropertyType STRING -Force | Out-Null
-        write-host "Local Machine key added, edited, High Performance forced. Please reboot your machine."}
-    ELSE {
-        New-ItemProperty -Path $registryPathPw2 -Name $NamePW2 -Value 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c -PropertyType STRING -Force | Out-Null
-        write-host "Local Machine key edited, High Performance forced. Please reboot your machine"}
-}
-$WPFPwinstall.Add_Click({ 
-    $WPFLoaflog2.Text = "High Performance forced. Please reboot your machine."
-    PowerOpen
-})
 
 #-------------------------
 #Launch Form

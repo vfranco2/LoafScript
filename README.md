@@ -2,6 +2,7 @@ Copy LoafScriptMaster to your H drive for use on any machine. May require copyin
 Right click LoafScript.ps1 and run with PowerShell to launch.
 
 Functions:
+-Update checker, one-click install
 
 -Option for Oracle enviro variables/.ora files only
 -Sets BIOS Password
@@ -19,7 +20,6 @@ Functions:
 -Uninstalls Microsoft Office
 -Forces Light/Dark theme
 -Unlocks background
--Forces high performance mode
 
-V2.6.5 3/4/2021
+V3.0.0 3/23/2021
 --------------------------------------------

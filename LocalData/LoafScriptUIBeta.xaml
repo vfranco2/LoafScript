@@ -1,0 +1,133 @@
+<Window x:Class="LoafGui.MainWindow"
+	x:Name="LoafGuiMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LoafGui"
+        mc:Ignorable="d"
+        Title="" Height="472" Width="400">
+    <TabControl>
+        <TabItem Header="Setup">
+            <Grid Margin="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="66"/>
+                    <RowDefinition Height="176"/>
+                    <RowDefinition Height="88"/>
+                    <RowDefinition Height="66"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+
+		<Grid Grid.Row="0" Grid.Column="0" Margin="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="66"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Left" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcon.png"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Margin="0" x:Name="LoafScriptUpdateText" TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" Visibility="hidden">Update Available!</TextBlock>
+		    <Button Grid.Row="1" Grid.Column="1" Margin="0" x:Name="LoafScriptUpdater" Content="Download" Background="#f0ad4e" Visibility="hidden"/>
+                </Grid>
+
+                <GroupBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Header="Installs">
+		    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Margin="1" x:Name="Oraproperties" Content="Oracle TNS/Env"/>
+                        <Button Grid.Row="1" Margin="1" x:Name="BiosPass" Content="BIOS PW"/>
+                        <Button Grid.Row="2" Margin="1" x:Name="Adminprocess" Content="Admin Process"/>
+                        <Button Grid.Row="3" Margin="1" x:Name="Runhpia" Content="Run HPIA"/>
+                        <Button Grid.Row="4" Margin="1" x:Name="Runupdateassistant" Content="Windows Update"/>
+                        <Button Grid.Row="5" Margin="1" x:Name="Orainstall32" Content="Oracle 32"/>
+                        <Button Grid.Row="6" Margin="1" x:Name="Orainstall64" Content="Oracle 64"/>
+                    </Grid>
+		</GroupBox>
+
+                <GroupBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Header="Verification">
+		    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Margin="1" x:Name="Oracheck" Content="Check Oracle"/>
+                        <Button Grid.Row="1" Margin="1" x:Name="Bitcheck" Content="Check Bitlocker"/>
+                        <Button Grid.Row="2" Margin="1" x:Name="Bioscheck" Content="Check Bios"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Header="Uninstalls">
+		    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Margin="1" x:Name="Orauninstall" Content="Oracle"/>
+                        <Button Grid.Row="2" Margin="1" x:Name="Progfeat" Content="Office"/>
+                    </Grid>
+                </GroupBox>
+
+                <TextBox Grid.Row="0" Grid.RowSpan="5" Grid.Column="1" x:Name="Loaflog" TextWrapping="Wrap" Text=""/>
+
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Personalization">
+            <Grid Margin="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="66"/>
+                    <RowDefinition Height="88"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcon.png"/>
+
+                <GroupBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Header="Personalization">
+		    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="22"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Margin="1" x:Name="Dkinstall" Content="Dark Mode"/>
+                        <Button Grid.Row="1" Margin="1" x:Name="Ltinstall" Content="Light Mode"/>
+                        <Button Grid.Row="2" Margin="1" x:Name="Bginstall" Content="Backgrounds"/>
+                    </Grid>
+                </GroupBox>
+
+                <TextBox Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" x:Name="Loaflog2" TextWrapping="Wrap" Text=""/>
+
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>
