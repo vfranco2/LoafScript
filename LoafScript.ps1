@@ -15,9 +15,8 @@
 #-------------------------
 # Load XAML UI File From LocalData
 #-------------------------
-$CurrentVersion = "3.0.0"
-#$xamlFile = ".\LocalData\LoafScriptUI.xaml"
-$xamlFile = ".\LocalData\LoafScriptUIBeta.xaml"
+$CurrentVersion = "3.1.0"
+$xamlFile = ".\LocalData\LoafScriptUI.xaml"
 $inputXML = Get-Content $xamlFile -Raw
 
 $inputXML = $inputXML -replace 'mc:Ignorable="d"','' -replace "x:N",'N' -replace '^<Win.*', '<Window'
@@ -258,33 +257,24 @@ $WPFProgfeat.Add_Click({
 #Personalization functions
 #-------------------------
 
+#Dark/Light theme keys
 $registryPathDk1 = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Themes"
 $registryPathDk2 = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-$registryPathBg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop"
-$registryPathPw = "HKLM:\System\CurrentControlSet\Control\Power"
-$registryPathPw2 = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel\NameSpace\{025A5937-A6BE-4686-A844-36FE4BEC8B6D}"
 $NameDK = "AppsUseLightTheme"
-$NameBG = "NoChangingWallPaper"
-$NamePW = "CsEnabled"
-$NamePW2 = "PreferredPlan"
 
 #Force Dark Mode
 Function Dkforce{
     IF(!(Test-Path $registryPathDk1)) {
         New-Item -Path $registryPathDk1 -Force | Out-Null
-        New-ItemProperty -Path $registryPathDk1 -Name $NameDK -Value 0 -PropertyType DWORD -Force | Out-Null
-        write-host "Local Machine key added, edited, dark mode forced"}
-    ELSE {
-        New-ItemProperty -Path $registryPathDk1 -Name $NameDK -Value 0 -PropertyType DWORD -Force | Out-Null
-        write-host "Local Machine key edited, dark mode forced"}
+    }
+    New-ItemProperty -Path $registryPathDk1 -Name $NameDK -Value 0 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, dark mode forced"
 
     IF(!(Test-Path $registryPathDk2)) {
         New-Item -Path $registryPathDk2 -Force | Out-Null
-        New-ItemProperty -Path $registryPath2 -Name $NameDK -Value 0 -PropertyType DWORD -Force | Out-Null
-        write-host "Local User key added, edited, dark mode forced"}
-    ELSE {
-        New-ItemProperty -Path $registryPathDk2 -Name $NameDK -Value 0 -PropertyType DWORD -Force | Out-Null
-        write-host "Local User key edited, dark mode forced"}
+    }
+    New-ItemProperty -Path $registryPathDk2 -Name $NameDK -Value 0 -PropertyType DWORD -Force | Out-Null
+    write-host "Local User key edited, dark mode forced"
 }
 $WPFDkinstall.Add_Click({ 
     $WPFLoaflog2.Text = "Dark mode forced"
@@ -295,34 +285,33 @@ $WPFDkinstall.Add_Click({
 Function Ltforce{
     IF(!(Test-Path $registryPathDk1)) {
         New-Item -Path $registryPathDk1 -Force | Out-Null
-        New-ItemProperty -Path $registryPathDk1 -Name $NameDK -Value 1 -PropertyType DWORD -Force | Out-Null
-        write-host "Local Machine key added, edited, light mode forced"}
-    ELSE {
-        New-ItemProperty -Path $registryPathDk1 -Name $NameDK -Value 1 -PropertyType DWORD -Force | Out-Null
-        write-host "Local Machine key edited, light mode forced"}
+    }
+    New-ItemProperty -Path $registryPathDk1 -Name $NameDK -Value 1 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, light mode forced"
 
     IF(!(Test-Path $registryPathDk2)) {
         New-Item -Path $registryPathDk2 -Force | Out-Null
-        New-ItemProperty -Path $registryPath2 -Name $NameDK -Value 1 -PropertyType DWORD -Force | Out-Null
-        write-host "Local User key added, edited, light mode forced"}
-    ELSE {
-        New-ItemProperty -Path $registryPathDk2 -Name $NameDK -Value 1 -PropertyType DWORD -Force | Out-Null
-        write-host "Local User key edited, light mode forced"}
+    }
+    New-ItemProperty -Path $registryPathDk2 -Name $NameDK -Value 1 -PropertyType DWORD -Force | Out-Null
+    write-host "Local User key edited, light mode forced"
 }
 $WPFLtinstall.Add_Click({ 
     $WPFLoaflog2.Text = "Light mode forced"
     Ltforce
 })
 
+
+#Background keys
+$registryPathBg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop"
+$NameBG = "NoChangingWallPaper"
+
 #Force Unlock Background (Theme stuff)
 Function Bgforce{
     IF(!(Test-Path $registryPathBg)) {
         New-Item -Path $registryPathBg -Force | Out-Null
-        New-ItemProperty -Path $registryPathBg -Name $NameBG -Value 0 -PropertyType DWORD -Force | Out-Null
-        write-host "Local Machine key added, edited, background editing unlocked"}
-    ELSE {
-        New-ItemProperty -Path $registryPathBg -Name $NameBG -Value 0 -PropertyType DWORD -Force | Out-Null
-        write-host "Local Machine key edited, background editing unlocked"}
+    }
+    New-ItemProperty -Path $registryPathBg -Name $NameBG -Value 0 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key added, edited, background editing unlocked"
 }
 $WPFBginstall.Add_Click({ 
     $WPFLoaflog2.Text = "Background editing unlocked"
@@ -330,8 +319,103 @@ $WPFBginstall.Add_Click({
 })
 
 
+#Microsoft Store
+$registryPathWindowsUpdate = "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate"
+$registryPathWindowsUpdateAU = "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU"
+$registryPathWindowsStore = "HKLM:\Software\Policies\Microsoft\WindowsStore"
+$NameDoNotConnect = "DoNotConnectToWindowsUpdateInternetLocations"
+$NameNoAutoUpdate = "NoAutoUpdate"
+$NameUseWUServer = "UseWUServer"
+$NameRemoveWindowsStore = "RemoveWindowsStore"
+
+#Force Unlock Microsoft Store
+Function MSStoreUnlock{
+    IF(!(Test-Path $registryPathWindowsUpdate)) {
+        New-Item -Path $registryPathWindowsUpdate -Force | Out-Null
+    }
+    New-ItemProperty -Path $registryPathWindowsUpdate -Name $NameDoNotConnect -Value 0 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, Windows Update Internet Locations unlocked"
+
+    IF(!(Test-Path $registryPathWindowsUpdateAU)) {
+        New-Item -Path $registryPathWindowsUpdateAU -Force | Out-Null
+    }
+    New-ItemProperty -Path $registryPathWindowsUpdateAU -Name $NameNoAutoUpdate -Value 0 -PropertyType DWORD -Force | Out-Null
+    New-ItemProperty -Path $registryPathWindowsUpdateAU -Name $NameUseWUServer -Value 0 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, Windows Update Auto-Update, Windows Update Server unlocked"
+
+    IF(!(Test-Path $registryPathWindowsStore)) {
+        New-Item -Path $registryPathWindowsStore -Force | Out-Null
+    }
+    New-ItemProperty -Path $registryPathWindowsStore -Name $NameRemoveWindowsStore -Value 0 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, Windows Update Auto-Update, Microsoft Store enabled"
+
+    #I would reset it right from here but the default reset command does not work - not sure why, might be permissions or a missing Windows package.
+    #Gotta use the built-in settings app to reset the Windows Store.
+    #Reset-AppxPackage Microsoft.WindowsStore
+    start ms-settings:appsfeatures-app
+}
+$WPFMSStoreUnlock.Add_Click({ 
+    $WPFLoaflog2.Text = "Microsoft Store unlocked - REQUIRES RESET FROM APPS & FEATURES IN SETTINGS - RE-LOCK ONCE FINISHED WITH IT!"
+    MSStoreUnlock
+})
+
+#Force Lock Microsoft Store
+Function MSStoreLock{
+    IF(!(Test-Path $registryPathWindowsUpdate)) {
+        New-Item -Path $registryPathWindowsUpdate -Force | Out-Null
+    }
+    New-ItemProperty -Path $registryPathWindowsUpdate -Name $NameDoNotConnect -Value 1 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, Windows Update Internet Locations locked"
+
+    IF(!(Test-Path $registryPathWindowsUpdateAU)) {
+        New-Item -Path $registryPathWindowsUpdateAU -Force | Out-Null
+    }
+    New-ItemProperty -Path $registryPathWindowsUpdateAU -Name $NameNoAutoUpdate -Value 1 -PropertyType DWORD -Force | Out-Null
+    New-ItemProperty -Path $registryPathWindowsUpdateAU -Name $NameUseWUServer -Value 1 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, Windows Update Auto-Update, Windows Update Server locked"
+
+    IF(!(Test-Path $registryPathWindowsStore)) {
+        New-Item -Path $registryPathWindowsStore -Force | Out-Null
+    }
+    New-ItemProperty -Path $registryPathWindowsStore -Name $NameRemoveWindowsStore -Value 1 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, Windows Update Auto-Update, Microsoft Store disabled"
+}
+$WPFMSStoreLock.Add_Click({ 
+    $WPFLoaflog2.Text = "Microsoft Store locked"
+    MSStoreLock
+})
+
+#Lock Screen keys
+$registryPathLockScreenKey = "HKLM:\Software\Policies\Microsoft\Windows\Personalization"
+$NameLockChange = "NoChangingLockScreen"
+$NameLockImage = "LockScreenImage"
+
+#Force Unlock Lock Screen (Theme stuff)
+Function LockScreenForce{
+    IF(!(Test-Path $registryPathLockScreenKey)) {
+        New-Item -Path $registryPathLockScreenKey -Force | Out-Null
+    }
+    New-ItemProperty -Path $registryPathLockScreenKey -Name $NameLockChange -Value 0 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, lock screen editing unlocked"
+
+    Add-Type -AssemblyName System.Windows.Forms
+    $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+    $OpenFileDialog.Title = "Please Select File"
+    $OpenFileDialog.InitialDirectory = [Environment]::GetFolderPath('Desktop')
+    $OpenFileDialog.filter = 'JPG Images (*.jpg)|*.jpg|PNG Images (*.png)|*.png'
+    $OpenFileDialog.ShowDialog() | Out-Null
+    $Global:SelectedFile = $OpenFileDialog.FileName
+
+    New-ItemProperty -Path $registryPathLockScreenKey -Name $NameLockImage -Value $SelectedFile -PropertyType string -Force | Out-Null
+    write-host "Local Machine key edited, lock screen image set"
+}
+$WPFLockScreenUnlock.Add_Click({ 
+    $WPFLoaflog2.Text = "Lock screen editing unlocked"
+    LockScreenForce
+})
+
 #-------------------------
-#Launch Form
+#Launch UI
 #-------------------------
 
 #write-host "To show the form, run the following" -ForegroundColor Cyan
