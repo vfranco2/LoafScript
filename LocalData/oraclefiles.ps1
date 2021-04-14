@@ -7,17 +7,47 @@
 [Environment]::SetEnvironmentVariable("TNS_ADMIN","C:\Oracle\product\12.1.0\dbhome_1\network\admin","Machine")
 
 
-#Checks to see if Oracle Path Exists
+#Oracle Detector, Checks To See If Oracle Path Exists
 try{
-    If(Test-Path -path "C:\Oracle\product\12.1.0\dbhome_1\network\admin"){
+    IF((Test-Path -path "C:\Oracle\product\12.1.0\dbhome_1\network\admin") -And (Test-Path -path "C:\Program Files (x86)\Oracle")) {
+        Write-Host "Found Oracle 32bit" -ForegroundColor Green
         xcopy "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\*.ora" "C:\Oracle\product\12.1.0\dbhome_1\network\admin" /y
     }
-    Else{
-        Write-Errror "ERROR: Oracle directory not found or Oracle not installed"
+    ELSEIF((Test-Path -path "C:\Oracle\product\12.1.0\dbhome_1\network\admin") -And (Test-Path -path "C:\Program Files\Oracle")) {
+        Write-Host "Found Oracle 64bit" -ForegroundColor Green
+        xcopy "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\*.ora" "C:\Oracle\product\12.1.0\dbhome_1\network\admin" /y
+    }
+    ELSEIF((Test-Path -path "C:\Oracle64") -And (Test-Path -path "C:\Oracle32")) {
+        Write-Host "Found Oracle 64bit & Oracle 32bit Package" -ForegroundColor Magenta
+        
+        try{
+            If(Test-Path -path "C:\Oracle32\product\12.1.0\dbhome_1\network\admin"){
+                xcopy "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\*.ora" "C:\Oracle32\product\12.1.0\dbhome_1\network\admin" /y
+            }
+            Else{
+                Write-Error "ERROR: Oracle 32 directory not found or Oracle not installed"
+            }
+        }
+        catch{
+            "Couldn't copy .ora files to 64bit"
+        }
+        try{
+            If(Test-Path -path "C:\Oracle64\product\12.1.0\dbhome_1\network\admin"){
+                xcopy "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\*.ora" "C:\Oracle64\product\12.1.0\dbhome_1\network\admin" /y
+            }
+            Else{
+                Write-Error "ERROR: Oracle 64 directory not found or Oracle not installed"
+            }
+        }
+        catch{
+            Write-Error "Couldn't copy .ora files to 32bit"
+        }
+    }
+    ELSE {
+        Write-Host "No Complete Oracle Install Found" -ForegroundColor Red
     }
 }
 catch{
-    "Couldn't copy .ora files"
+    Write-Host "No Complete Oracle Install Found, Couldn't Copy .ora Files" -ForegroundColor Red
 }
-
 pause

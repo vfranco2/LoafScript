@@ -28,4 +28,7 @@
 - Unlocks background
 - Unlocks Lock Screen Editing
 
-# V3.1.0 3/24/2021
+-Installs Oracle 32bit/64bit Package
+-Retires Local Machine
+
+# V3.2.0 4/14/2021

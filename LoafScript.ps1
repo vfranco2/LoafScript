@@ -15,7 +15,7 @@
 #-------------------------
 # Load XAML UI File From LocalData
 #-------------------------
-$CurrentVersion = "3.1.0"
+$CurrentVersion = "3.2.0"
 $xamlFile = ".\LocalData\LoafScriptUI.xaml"
 $inputXML = Get-Content $xamlFile -Raw
 
@@ -179,10 +179,10 @@ $WPFRunupdateassistant.Add_Click({
 })
 
 #Oracle Installers
-#Launcher in LocalData, files in RemoteData
+#Launcher in LocalData, files in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle
 #32bit Installer
 Function installOra32{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstaller32.ps1")
+    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstaller.ps1 32")
 }
 $WPFOrainstall32.Add_Click({ 
     $WPFLoaflog.Text = "Installing Oracle 32"
@@ -191,7 +191,7 @@ $WPFOrainstall32.Add_Click({
 
 #64bit installer
 Function installOra64{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstaller64.ps1")
+    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstaller.ps1 64")
 }
 $WPFOrainstall64.Add_Click({ 
     $WPFLoaflog.Text = "Installing Oracle 64"
@@ -237,7 +237,7 @@ $WPFBioscheck.Add_Click({
 #Uninstall Oracle
 #Files in LocalData
 Function UnOra{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\loafuninoracle.ps1")
+    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleuninstaller.ps1")
 }
 $WPFOrauninstall.Add_Click({ 
     $WPFLoaflog.Text = "Uninstalling Oracle"
@@ -300,7 +300,6 @@ $WPFLtinstall.Add_Click({
     Ltforce
 })
 
-
 #Background keys
 $registryPathBg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop"
 $NameBG = "NoChangingWallPaper"
@@ -317,7 +316,6 @@ $WPFBginstall.Add_Click({
     $WPFLoaflog2.Text = "Background editing unlocked"
     Bgforce
 })
-
 
 #Microsoft Store
 $registryPathWindowsUpdate = "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate"
@@ -413,6 +411,21 @@ $WPFLockScreenUnlock.Add_Click({
     $WPFLoaflog2.Text = "Lock screen editing unlocked"
     LockScreenForce
 })
+
+#-------------------------
+#Experimental functions
+#-------------------------
+
+#Oracle 32bit/64bit Package installer
+#Launcher in LocalData, files in RemoteData
+Function installOraPackage{
+    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstallerpackage.ps1")
+}
+$WPFOraclePackage.Add_Click({ 
+    $WPFLoaflog3.Text = "Installing Oracle 32bit/64bit Package"
+    installOraPackage
+})
+
 
 #-------------------------
 #Launch UI

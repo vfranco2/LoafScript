@@ -135,5 +135,49 @@
 
             </Grid>
         </TabItem>
+
+	<TabItem Header="Experimental">
+            <Grid Margin="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="66"/>
+                    <RowDefinition Height="44"/>
+                    <RowDefinition Height="44"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcon.png"/>
+
+                <GroupBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Header="Oracle">
+		    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Margin="1" x:Name="OraclePackage" Content="Oracle 32/64 Package"/>
+                    </Grid>
+                </GroupBox>
+
+		<GroupBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Header="Retire Script">
+		    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Margin="1" x:Name="RetireLocal" Content="Retire Machine"/>
+                    </Grid>
+                </GroupBox>
+
+                <TextBox Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" x:Name="Loaflog3" TextWrapping="Wrap" Text=""/>
+
+            </Grid>
+        </TabItem>
     </TabControl>
 </Window>
