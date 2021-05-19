@@ -2,7 +2,7 @@
 # LoafScript
 ## Built by Vlad Franco and Jagjot Singh
 
-### Copy LoafScriptMaster to your H drive for use on any machine. May require copying folder from H drive to local C drive to run program.
+### Copy LoafScript X.Y.Z to your H drive for use on any machine. May require copying folder from H drive to local C drive to run.
 ### Right click LoafScript.ps1 and run with PowerShell to launch.
 
 ## Functions:
@@ -23,12 +23,12 @@
 - Uninstalls Oracle
 - Uninstalls Microsoft Office
 
+- Swaps Light/Dark theme
 - Unlocks/Locks Microsoft Store
-- Forces Light/Dark theme
 - Unlocks background
 - Unlocks Lock Screen Editing
 
 -Installs Oracle 32bit/64bit Package
 -Retires Local Machine
 
-# V3.2.0 4/14/2021
+# V3.3.0 5/19/2021

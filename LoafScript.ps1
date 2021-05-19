@@ -5,17 +5,19 @@
 #XAML User Interface file found in LocalData folder
 
 #Functions in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData (Referred to as RemoteData):
-#BIOS PW, Admin Process, HPIA, Windows Update Assistant
-
-#Functions in LocalData folder (Found in the directory your LoafScript is):
-#Oracle Install, Office Updater, Oracle Uninstall
+#Oracle Files, BIOS PW, Admin Process, HPIA, Windows Update Assistant, Oracle 32 Or 64 Install, Oracle Uninstall, Oracle 32/64 Package Install, Retire Machine
 #----------------------
+
+
+#-------------------------
+# LoafScript Version, Output Variables
+#-------------------------
+$CurrentVersion = "3.3.0"
 
 
 #-------------------------
 # Load XAML UI File From LocalData
 #-------------------------
-$CurrentVersion = "3.2.0"
 $xamlFile = ".\LocalData\LoafScriptUI.xaml"
 $inputXML = Get-Content $xamlFile -Raw
 
@@ -30,7 +32,6 @@ try{
 }
 catch{
     Write-Warning "Unable to parse XML, with error: $($Error[0])`n Ensure that there are NO SelectionChanged or TextChanged properties in your textboxes (PowerShell cannot process them)"
-     #pause
     throw
     pause
 }
@@ -73,25 +74,22 @@ Get-FormVariables
 #Checks the LoafScript folder in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\ (Inside the parent LoafScript folder!)
 #If the version of this script does not match, it prompts the user
 Function downloadNewLoafScript{
-    $CurrentLoaf = "LoafScript "+$CurrentVersion
-    $WPFLoafGuiMainWindow.Title = $CurrentLoaf
-    $FreshLoaf = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
-    $CompareLoaf = $FreshLoaf.ToString()
-    $CompareLoaf = $CompareLoaf.substring(70)
+    $WPFLoafGuiMainWindow.Title = "LoafScript " + $CurrentVersion
+    $NewestVersion = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
+    $CompareVersion = $NewestVersion.ToString()
+    $CompareVersion = $CompareVersion.substring(81)
 
-    if ($CompareLoaf -ne $CurrentLoaf){
+    if ([version]$CompareVersion -gt [version]$CurrentVersion){
         $WPFLoafScriptUpdateText.Visibility="visible"
         $WPFLoafScriptUpdater.Visibility="visible"
     }
 }
 downloadNewLoafScript
-$WPFLoafScriptUpdater.Add_Click({ 
-    #$WPFLoaflog.Text = "Lol"
+$WPFLoafScriptUpdater.Add_Click({
     $DownloadLoaf = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
     $WPFLoaflog.Text = $DownloadLoaf
     Try{
         $HostName=$env:UserName
-        #Copy-Item $DownloadLoaf -Destination "C:\Users\$HostName\Desktop" -Recurse -ErrorAction Stop
         Copy-Item $DownloadLoaf -Destination "..\" -Recurse -ErrorAction Stop
         $InstallLocation = Get-Item -Path "..\"
         $WPFLoaflog.Text = "Downloaded new version of LoafScript to: " + $InstallLocation + " - Navigate to the new install folder and relaunch the script."
@@ -107,9 +105,9 @@ $WPFLoafScriptUpdater.Add_Click({
 #-------------------------
 
 #Oracle files only
-#Launcher in LocalData, files in RemoteData
+#Files in RemoteData
 Function installOrafiles{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oraclefiles.ps1")
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oraclefiles.ps1'"
 }
 $WPFOraproperties.Add_Click({ 
     $WPFLoaflog.Text = "Installing Oracle Environment Variables and .ora files"
@@ -182,7 +180,7 @@ $WPFRunupdateassistant.Add_Click({
 #Launcher in LocalData, files in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle
 #32bit Installer
 Function installOra32{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstaller.ps1 32")
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleinstaller.ps1' 32"
 }
 $WPFOrainstall32.Add_Click({ 
     $WPFLoaflog.Text = "Installing Oracle 32"
@@ -191,7 +189,7 @@ $WPFOrainstall32.Add_Click({
 
 #64bit installer
 Function installOra64{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstaller.ps1 64")
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleinstaller.ps1' 64"
 }
 $WPFOrainstall64.Add_Click({ 
     $WPFLoaflog.Text = "Installing Oracle 64"
@@ -235,9 +233,9 @@ $WPFBioscheck.Add_Click({
 #-------------------------
 
 #Uninstall Oracle
-#Files in LocalData
+#Files in RemoteData
 Function UnOra{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleuninstaller.ps1")
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleuninstaller.ps1'"
 }
 $WPFOrauninstall.Add_Click({ 
     $WPFLoaflog.Text = "Uninstalling Oracle"
@@ -258,46 +256,54 @@ $WPFProgfeat.Add_Click({
 #-------------------------
 
 #Dark/Light theme keys
-$registryPathDk1 = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Themes"
-$registryPathDk2 = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-$NameDK = "AppsUseLightTheme"
+$registryPathTheme1 = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Themes"
+$registryPathTheme2 = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+$NameTheme = "AppsUseLightTheme"
 
 #Force Dark Mode
-Function Dkforce{
-    IF(!(Test-Path $registryPathDk1)) {
-        New-Item -Path $registryPathDk1 -Force | Out-Null
+Function Themeforce{
+    IF(!(Test-Path $registryPathTheme1)) {
+        New-Item -Path $registryPathTheme1 -Force | Out-Null
     }
-    New-ItemProperty -Path $registryPathDk1 -Name $NameDK -Value 0 -PropertyType DWORD -Force | Out-Null
-    write-host "Local Machine key edited, dark mode forced"
+    IF(!(Test-Path $registryPathTheme2)) {
+        New-Item -Path $registryPathTheme2 -Force | Out-Null
+    }
 
-    IF(!(Test-Path $registryPathDk2)) {
-        New-Item -Path $registryPathDk2 -Force | Out-Null
+    $CurrentTheme1 = Get-ItemPropertyValue -Path $registryPathTheme2 -Name $NameTheme
+    IF($CurrentTheme1 -eq 0){
+        New-ItemProperty -Path $registryPathTheme1 -Name $NameTheme -Value 1 -PropertyType DWORD -Force | Out-Null
+        New-ItemProperty -Path $registryPathTheme2 -Name $NameTheme -Value 1 -PropertyType DWORD -Force | Out-Null
+        $WPFLoaflog2.Text = "System Theme Changed To Light Mode"
     }
-    New-ItemProperty -Path $registryPathDk2 -Name $NameDK -Value 0 -PropertyType DWORD -Force | Out-Null
-    write-host "Local User key edited, dark mode forced"
+    ELSE{
+        New-ItemProperty -Path $registryPathTheme1 -Name $NameTheme -Value 0 -PropertyType DWORD -Force | Out-Null
+        New-ItemProperty -Path $registryPathTheme2 -Name $NameTheme -Value 0 -PropertyType DWORD -Force | Out-Null
+        $WPFLoaflog2.Text = "System Theme Changed To Dark Mode"
+    }
 }
-$WPFDkinstall.Add_Click({ 
-    $WPFLoaflog2.Text = "Dark mode forced"
-    Dkforce
+$WPFThemeUnlock.Add_Click({
+    Themeforce
 })
 
-#Force Light Mode
-Function Ltforce{
-    IF(!(Test-Path $registryPathDk1)) {
-        New-Item -Path $registryPathDk1 -Force | Out-Null
-    }
-    New-ItemProperty -Path $registryPathDk1 -Name $NameDK -Value 1 -PropertyType DWORD -Force | Out-Null
-    write-host "Local Machine key edited, light mode forced"
+#Color Options keys
+$registryPathCUColor = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
+$NameNoDispAppearancePageCU = "NoDispAppearancePage"
+$NameNoColorChoiceCU = "NoColorChoice"
 
-    IF(!(Test-Path $registryPathDk2)) {
-        New-Item -Path $registryPathDk2 -Force | Out-Null
+#Unlock Color Options
+Function Colorforce{
+    IF(Test-Path $registryPathCUColor) {
+        New-ItemProperty -Path $registryPathCUColor -Name $NameNoDispAppearancePageCU -Value 0 -PropertyType DWORD -Force | Out-Null
     }
-    New-ItemProperty -Path $registryPathDk2 -Name $NameDK -Value 1 -PropertyType DWORD -Force | Out-Null
-    write-host "Local User key edited, light mode forced"
+    IF(Test-Path $registryPathCUColor) {
+        New-ItemProperty -Path $registryPathCUColor -Name $NameNoColorChoiceCU -Value 0 -PropertyType DWORD -Force | Out-Null
+    }
+    write-host "Local Machine keys removed, color options unlocked"
+    start ms-settings:colors
 }
-$WPFLtinstall.Add_Click({ 
-    $WPFLoaflog2.Text = "Light mode forced"
-    Ltforce
+$WPFColorUnlock.Add_Click({ 
+    $WPFLoaflog2.Text = "Color options unlocked"
+    Colorforce
 })
 
 #Background keys
@@ -312,12 +318,12 @@ Function Bgforce{
     New-ItemProperty -Path $registryPathBg -Name $NameBG -Value 0 -PropertyType DWORD -Force | Out-Null
     write-host "Local Machine key added, edited, background editing unlocked"
 }
-$WPFBginstall.Add_Click({ 
+$WPFBgUnlock.Add_Click({ 
     $WPFLoaflog2.Text = "Background editing unlocked"
     Bgforce
 })
 
-#Microsoft Store
+#Microsoft Store keys
 $registryPathWindowsUpdate = "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate"
 $registryPathWindowsUpdateAU = "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate\AU"
 $registryPathWindowsStore = "HKLM:\Software\Policies\Microsoft\WindowsStore"
@@ -349,6 +355,7 @@ Function MSStoreUnlock{
 
     #I would reset it right from here but the default reset command does not work - not sure why, might be permissions or a missing Windows package.
     #Gotta use the built-in settings app to reset the Windows Store.
+    #Default reset command is:
     #Reset-AppxPackage Microsoft.WindowsStore
     start ms-settings:appsfeatures-app
 }
@@ -419,13 +426,23 @@ $WPFLockScreenUnlock.Add_Click({
 #Oracle 32bit/64bit Package installer
 #Launcher in LocalData, files in RemoteData
 Function installOraPackage{
-    start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstallerpackage.ps1")
+    #start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstallerpackage.ps1")
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleinstallerpackage.ps1'"
 }
 $WPFOraclePackage.Add_Click({ 
     $WPFLoaflog3.Text = "Installing Oracle 32bit/64bit Package"
     installOraPackage
 })
 
+#Retire Machine
+#Files in RemoteData
+Function retireMachine{
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\retiremachine.ps1'"
+}
+$WPFRetireLocal.Add_Click({ 
+    $WPFLoaflog3.Text = "Retiring Local Machine"
+    retireMachine
+})
 
 #-------------------------
 #Launch UI
