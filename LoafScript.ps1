@@ -12,7 +12,7 @@
 #-------------------------
 # LoafScript Version, Output Variables
 #-------------------------
-$CurrentVersion = "3.3.0"
+$CurrentVersion = "3.4.0"
 
 
 #-------------------------
@@ -65,8 +65,174 @@ Get-FormVariables
 
 
 #-------------------------
-#Button Functions/Output
+#Functions/Output
 #-------------------------
+
+#-------------------------
+#Theme Functions
+#-------------------------
+
+#Shuffles between 10 LoafScript icons
+Function LoafScriptIconShuffle {
+    $LoafIconElements = @($WPFLoafIconSetup,$WPFLoafIconInstalls,$WPFLoafIconPersonalization,$WPFLoafIconExperimental)
+    $LoafIcons = @('LoafIcon.png','LoafIcon180.png','LoafIconAnniversary.png','LoafIconBite.png','LoafIconBurnt.png','LoafIconButter.png','LoafIconCPU.png','LoafIconMoldy.png','LoafIconTerminal.png','LoafIconToasted.png')
+    $LoafRemoteSource = '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\LoafIcons\'
+    try{
+        
+        #Loop through all icons in .xaml file, assign image to them
+        foreach ($IconElement in $LoafIconElements) {
+            #Random number gen
+            $RandoLoaf = (Get-Random -Maximum 9)
+            $IconElement.Source = ($LoafRemoteSource + $LoafIcons[$RandoLoaf])
+        }
+    }
+    catch{
+        foreach ($IconElement in $LoafIconElements) {
+            $IconElement.Source = '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\LoafIcons\Loaficon.png'
+        }
+    }
+}
+LoafScriptIconShuffle
+
+#This is pretty bomb, themes LoafScript based on .ini file in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\.
+#Click on theme button under Personalization to swap theme out.
+Function LoafScriptThemer{
+    #Colors
+    $Jet = '#121212'
+    $Charcoal = '#40434E'
+    $Steel = '#696773'
+    $Deep = '#2E4057'
+    $Sea = '#4D9DE0'
+    $Champagne = '#EEE0CB'
+    $Greenery = '#6BAB90'
+    
+    #Set theme to light in case of .csv error
+    $SelectedTheme = "light"
+
+    try{
+        #Get theme settings from remote folder
+        $ThemeFile = Import-Csv '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\themes.csv'
+        #Boolean for profile creation if it is not found in csv
+        $FoundUser = 0
+
+        #Loop through users found, set selected theme
+        foreach ($ThemeUser in $ThemeFile) {
+            if ($ThemeUser.User -eq $env:UserName){
+                $SelectedTheme = $ThemeUser.Theme
+                $FoundUser = 1
+            }
+        }
+
+        #Will be 0 if no users found, set theme to light and create profile with light as default
+        if ($FoundUser -eq 0){
+            $ThemeFile.User = $env:UserName
+            $ThemeFile.Theme = 'light'
+            $ThemeFile | Export-Csv '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\themes.csv' -Append
+        }
+
+        #Set theme colors
+        IF($SelectedTheme -eq "dark"){
+            $BGColor = $Jet
+            $TextColor = '#FFFFFF'
+            $ButtonColor = $Charcoal
+            $TabColor = $Steel
+        }
+        ELSEIF($SelectedTheme -eq "cobalt"){
+            $BGColor = $Deep
+            $TextColor = '#FFFFFF'
+            $ButtonColor = $Sea
+            $TabColor = $Sea
+        }
+        ELSEIF($SelectedTheme -eq "nature"){
+            $BGColor = '#EEE0CB'
+            $TextColor = '#000000'
+            $ButtonColor = $Greenery
+            $TabColor = $Greenery
+        }
+        ELSEIF($SelectedTheme -eq "light"){ }
+        ELSE{ }
+
+        #Assign colors to .xaml elements, looping through collections of them
+        IF(($SelectedTheme -eq "dark") -or ($SelectedTheme -eq "cobalt") -or ($SelectedTheme -eq "nature")){
+
+            $WPFLoafGuiMainWindow.Background = $BGColor
+            $WPFLoafGuiTabControl.Background = $BGColor
+
+            $WPFLoafScriptUpdateText.Foreground = $TextColor
+
+            $WPFLoafGUITabSetup.Background = $TabColor
+            $WPFLoafGUITabInstalls.Background = $TabColor
+            $WPFLoafGUITabPersonalization.Background = $TabColor
+            $WPFLoafGUITabExperimental.Background = $TabColor
+
+            $Buttonlist = @($WPFButtonAdminprocess,$WPFButtonBgUnlock,$WPFButtonBioscheck,$WPFButtonBiosPass,$WPFButtonBitcheck,$WPFButtonColorUnlock,$WPFButtonLockScreenUnlock,
+                            $WPFButtonMSStoreLock,$WPFButtonMSStoreUnlock,$WPFButtonOracheck,$WPFButtonOraclePackage,$WPFButtonOrainstall32,$WPFButtonOrainstall64,$WPFButtonOraproperties,
+                            $WPFButtonOrauninstall,$WPFButtonProgfeat,$WPFButtonRetireLocal,$WPFButtonRunhpia,$WPFButtonRunupdateassistant,$WPFButtonThemeUnlock,$WPFButtonPowerBIInstall32,$WPFButtonPowerBIInstall64)
+
+            $GroupBoxlist = @($WPFLoafGuiGroupBoxSetup,$WPFLoafGuiGroupBoxVerification,$WPFLoafGuiGroupBoxUninstalls,$WPFLoafGuiGroupBoxSoftware,$WPFLoafGuiGroupBoxOracle,$WPFLoafGuiGroupBoxPersonalization,$WPFLoafGuiGroupBoxExperimental)
+
+            $Loafloglist = @($WPFLoaflog1,$WPFLoaflog2,$WPFLoaflog3,$WPFLoaflog4)
+
+            foreach($Buttonitem in $Buttonlist){
+                $Buttonitem.Background = $ButtonColor
+                $Buttonitem.Foreground = $TextColor
+            }
+
+            foreach($GroupBoxitem in $GroupBoxlist){
+                $GroupBoxitem.Foreground = $TextColor
+                $GroupBoxitem.BorderBrush = $BGColor
+            }
+
+            foreach($Loaflogitem in $Loafloglist){
+                $Loaflogitem.Background = $BGColor
+                $Loaflogitem.Foreground = $TextColor
+            }
+        }
+    }
+    catch{
+        $WPFLoaflog1.Text = "Error setting theme!"
+        #$WPFLoaflog1.Text = "$($Error[0])"
+    }
+
+}
+LoafScriptThemer
+
+Function ChangeLoafScriptTheme{
+    param (
+        $ThemeName
+    )
+    try{
+        $ThemeFile = Import-Csv '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\themes.csv'
+
+        #Loop through users found, set selected theme
+        foreach ($ThemeUser in $ThemeFile) {
+            if ($ThemeUser.User -eq $env:UserName){
+                $ThemeUser.Theme = $ThemeName
+                $ThemeFile | Export-Csv '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\themes.csv'
+                $WPFLoaflog3.Text = "Changed to "+$ThemeName+" theme!"
+                #Refresh the script
+                start-process powershell.exe -argument "& '.\LoafScript.ps1'"
+                exit
+            }
+        }
+    }
+    catch{
+        $WPFLoaflog1.Text = "Error setting theme!"
+        #$WPFLoaflog1.Text = "$($Error[0])"
+    }
+}
+$WPFButtonLightTheme.Add_Click({
+    ChangeLoafScriptTheme light
+})
+$WPFButtonDarkTheme.Add_Click({
+    ChangeLoafScriptTheme dark
+})
+$WPFButtonCobaltTheme.Add_Click({
+    ChangeLoafScriptTheme cobalt
+})
+$WPFButtonNatureTheme.Add_Click({
+    ChangeLoafScriptTheme nature
+})
 
 #-------------------------
 #Updater Functions
@@ -74,7 +240,7 @@ Get-FormVariables
 #Checks the LoafScript folder in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\ (Inside the parent LoafScript folder!)
 #If the version of this script does not match, it prompts the user
 Function downloadNewLoafScript{
-    $WPFLoafGuiMainWindow.Title = "LoafScript " + $CurrentVersion
+    $WPFLoafGuiMainWindow.Title = "LoafScript " + $CurrentVersion + " - 2-Year Anniversary Edition"
     $NewestVersion = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
     $CompareVersion = $NewestVersion.ToString()
     $CompareVersion = $CompareVersion.substring(81)
@@ -87,21 +253,21 @@ Function downloadNewLoafScript{
 downloadNewLoafScript
 $WPFLoafScriptUpdater.Add_Click({
     $DownloadLoaf = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
-    $WPFLoaflog.Text = $DownloadLoaf
+    $WPFLoaflog1.Text = $DownloadLoaf
     Try{
         $HostName=$env:UserName
         Copy-Item $DownloadLoaf -Destination "..\" -Recurse -ErrorAction Stop
         $InstallLocation = Get-Item -Path "..\"
-        $WPFLoaflog.Text = "Downloaded new version of LoafScript to: " + $InstallLocation + " - Navigate to the new install folder and relaunch the script."
+        $WPFLoaflog1.Text = "Downloaded new version of LoafScript to: " + $InstallLocation + " - Navigate to the new install folder and relaunch the script."
     }
     Catch{
-        $WPFLoaflog.Text = "$($Error[0])"
+        $WPFLoaflog1.Text = "$($Error[0])"
     }
     
 })
 
 #-------------------------
-#Installer Functions
+#Setup Functions
 #-------------------------
 
 #Oracle files only
@@ -109,8 +275,8 @@ $WPFLoafScriptUpdater.Add_Click({
 Function installOrafiles{
     start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oraclefiles.ps1'"
 }
-$WPFOraproperties.Add_Click({ 
-    $WPFLoaflog.Text = "Installing Oracle Environment Variables and .ora files"
+$WPFButtonOraproperties.Add_Click({ 
+    $WPFLoaflog1.Text = "Installing Oracle Environment Variables and .ora files"
     installOraFiles
 })
 
@@ -131,26 +297,9 @@ Function BiosPW{
     Remove-Item "C:\Users\$HostName\Desktop\BiosPass" -Recurse –Force
     Set-Location $PSScriptRoot
 }
-$WPFBiosPass.Add_Click({
-    $WPFLoaflog.Text = "Installing BIOS Password"
+$WPFButtonBiosPass.Add_Click({
+    $WPFLoaflog1.Text = "Installing BIOS Password"
     BiosPW
-})
-
-#Admin Process DLL
-#Files in RemoteData
-Function APDLL{
-    #Fetch Hostname
-    $HostName=$env:UserName
-    #Moves Bios and has check if it already exists 
-    Try{
-        Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\Loafscript\RemoteData\jvm.dll" -Destination "C:\Program Files (x86)\Oracle\JInitiator 1.3.1.29\bin\hotspot" -Recurse -ErrorAction Stop
-    }
-    Catch{
-        "Error occured!"}
-}
-$WPFAdminprocess.Add_Click({ 
-    $WPFLoaflog.Text = "Copying .dll file to JInitiator folder"
-    APDLL
 })
 
 #Run HPIA
@@ -160,8 +309,8 @@ Function HpiaExe{
     $ScriptPath = Split-Path $MyInvocation.InvocationName
     & $NewHpia
 }
-$WPFRunhpia.Add_Click({ 
-    $WPFLoaflog.Text = "Running HPIA - Found in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image"
+$WPFButtonRunhpia.Add_Click({ 
+    $WPFLoaflog1.Text = "Running HPIA - Found in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image"
     HpiaExe
 })
 
@@ -171,29 +320,9 @@ Function WinUpdate{
     $NewWindows10 = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\Windows10Upgrade9252.exe"
     & $NewWindows10
 }
-$WPFRunupdateassistant.Add_Click({ 
-    $WPFLoaflog.Text = "Running Windows 10 Update Assistant"
+$WPFButtonRunupdateassistant.Add_Click({ 
+    $WPFLoaflog1.Text = "Running Windows 10 Update Assistant"
     WinUpdate
-})
-
-#Oracle Installers
-#Launcher in LocalData, files in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle
-#32bit Installer
-Function installOra32{
-    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleinstaller.ps1' 32"
-}
-$WPFOrainstall32.Add_Click({ 
-    $WPFLoaflog.Text = "Installing Oracle 32"
-    installOra32
-})
-
-#64bit installer
-Function installOra64{
-    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleinstaller.ps1' 64"
-}
-$WPFOrainstall64.Add_Click({ 
-    $WPFLoaflog.Text = "Installing Oracle 64"
-    installOra64
 })
 
 #-------------------------
@@ -209,23 +338,23 @@ Function chkOra{
         "Oracle is not installed on this computer"
         $error[0]
     }}
-$WPFOracheck.Add_Click({ 
-    $WPFLoaflog.Text = chkOra 
+$WPFButtonOracheck.Add_Click({ 
+    $WPFLoaflog1.Text = chkOra 
 })
 
 #Bitlocker Check
 Function chkBit{
     manage-bde c: -protectors -get}
-$WPFBitcheck.Add_Click({ 
-    $WPFLoaflog.Text = chkBit
+$WPFButtonBitcheck.Add_Click({ 
+    $WPFLoaflog1.Text = chkBit
 })
 
 #Check BIOS
 Function chkBios{
     wmic bios get smbiosbiosversion
     wmic bios get serialnumber}
-$WPFBioscheck.Add_Click({ 
-    $WPFLoaflog.Text = chkBios 
+$WPFButtonBioscheck.Add_Click({ 
+    $WPFLoaflog1.Text = chkBios 
 })
 
 #-------------------------
@@ -237,8 +366,8 @@ $WPFBioscheck.Add_Click({
 Function UnOra{
     start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleuninstaller.ps1'"
 }
-$WPFOrauninstall.Add_Click({ 
-    $WPFLoaflog.Text = "Uninstalling Oracle"
+$WPFButtonOrauninstall.Add_Click({ 
+    $WPFLoaflog1.Text = "Uninstalling Oracle"
     UnOra
 })
 
@@ -246,9 +375,94 @@ $WPFOrauninstall.Add_Click({
 Function UnProg{
     appwiz.cpl
 }
-$WPFProgfeat.Add_Click({ 
-    $WPFLoaflog.Text = "Launching Programs & Features"
+$WPFButtonProgfeat.Add_Click({ 
+    $WPFLoaflog1.Text = "Launching Programs & Features"
     UnProg
+})
+
+#Retire Machine
+#Files in RemoteData
+Function retireMachine{
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\retiremachine.ps1'"
+}
+$WPFButtonRetireLocal.Add_Click({ 
+    $WPFLoaflog1.Text = "Retiring Local Machine"
+    retireMachine
+})
+
+#-------------------------
+#Installer functions
+#-------------------------
+
+#Admin Process DLL
+#Files in RemoteData
+Function APDLL{
+    #Fetch Hostname
+    $HostName=$env:UserName
+    Try{
+        Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\Loafscript\RemoteData\jvm.dll" -Destination "C:\Program Files (x86)\Oracle\JInitiator 1.3.1.29\bin\hotspot" -Recurse -ErrorAction Stop
+    }
+    Catch{
+        "Error occured!"
+    }
+}
+$WPFButtonAdminprocess.Add_Click({ 
+    $WPFLoaflog2.Text = "Copying .dll file to JInitiator folder"
+    APDLL
+})
+
+#PowerBI Install
+Function installPowerBI{
+    param (
+        $BIVersion
+    )
+    if($BIVersion -eq 64){
+        $BILauncher = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Manual SW installations\Microsoft Power BI Desktop\PBIDesktopSetup_x64.exe"
+    }
+    else{
+        $BILauncher = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Manual SW installations\Microsoft Power BI Desktop\PBIDesktopSetup.exe"
+    }    
+    $ScriptPath = Split-Path $MyInvocation.InvocationName
+    & $BILauncher
+}
+$WPFButtonPowerBIInstall32.Add_Click({ 
+    $WPFLoaflog2.Text = "Installing PowerBI 32bit"
+    installPowerBI 32
+})
+$WPFButtonPowerBIInstall64.Add_Click({ 
+    $WPFLoaflog2.Text = "Installing PowerBI 64bit"
+    installPowerBI 64
+})
+
+#Oracle Installers
+#Launcher in LocalData, files in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle
+#32bit Installer
+Function installOra32{
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleinstaller.ps1' 32"
+}
+$WPFButtonOrainstall32.Add_Click({ 
+    $WPFLoaflog2.Text = "Installing Oracle 32"
+    installOra32
+})
+
+#64bit installer
+Function installOra64{
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleinstaller.ps1' 64"
+}
+$WPFButtonOrainstall64.Add_Click({ 
+    $WPFLoaflog2.Text = "Installing Oracle 64"
+    installOra64
+})
+
+#Oracle 32bit/64bit Package installer
+#Launcher in LocalData, files in RemoteData
+Function installOraPackage{
+    #start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstallerpackage.ps1")
+    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleinstallerpackage.ps1'"
+}
+$WPFButtonOraclePackage.Add_Click({ 
+    $WPFLoaflog2.Text = "Installing Oracle 32bit/64bit Package"
+    installOraPackage
 })
 
 #-------------------------
@@ -273,15 +487,15 @@ Function Themeforce{
     IF($CurrentTheme1 -eq 0){
         New-ItemProperty -Path $registryPathTheme1 -Name $NameTheme -Value 1 -PropertyType DWORD -Force | Out-Null
         New-ItemProperty -Path $registryPathTheme2 -Name $NameTheme -Value 1 -PropertyType DWORD -Force | Out-Null
-        $WPFLoaflog2.Text = "System Theme Changed To Light Mode"
+        $WPFLoaflog3.Text = "System Theme Changed To Light Mode"
     }
     ELSE{
         New-ItemProperty -Path $registryPathTheme1 -Name $NameTheme -Value 0 -PropertyType DWORD -Force | Out-Null
         New-ItemProperty -Path $registryPathTheme2 -Name $NameTheme -Value 0 -PropertyType DWORD -Force | Out-Null
-        $WPFLoaflog2.Text = "System Theme Changed To Dark Mode"
+        $WPFLoaflog3.Text = "System Theme Changed To Dark Mode"
     }
 }
-$WPFThemeUnlock.Add_Click({
+$WPFButtonThemeUnlock.Add_Click({
     Themeforce
 })
 
@@ -301,8 +515,8 @@ Function Colorforce{
     write-host "Local Machine keys removed, color options unlocked"
     start ms-settings:colors
 }
-$WPFColorUnlock.Add_Click({ 
-    $WPFLoaflog2.Text = "Color options unlocked"
+$WPFButtonColorUnlock.Add_Click({ 
+    $WPFLoaflog3.Text = "Color options unlocked"
     Colorforce
 })
 
@@ -318,8 +532,8 @@ Function Bgforce{
     New-ItemProperty -Path $registryPathBg -Name $NameBG -Value 0 -PropertyType DWORD -Force | Out-Null
     write-host "Local Machine key added, edited, background editing unlocked"
 }
-$WPFBgUnlock.Add_Click({ 
-    $WPFLoaflog2.Text = "Background editing unlocked"
+$WPFButtonBgUnlock.Add_Click({ 
+    $WPFLoaflog3.Text = "Background editing unlocked"
     Bgforce
 })
 
@@ -359,8 +573,8 @@ Function MSStoreUnlock{
     #Reset-AppxPackage Microsoft.WindowsStore
     start ms-settings:appsfeatures-app
 }
-$WPFMSStoreUnlock.Add_Click({ 
-    $WPFLoaflog2.Text = "Microsoft Store unlocked - REQUIRES RESET FROM APPS & FEATURES IN SETTINGS - RE-LOCK ONCE FINISHED WITH IT!"
+$WPFButtonMSStoreUnlock.Add_Click({ 
+    $WPFLoaflog3.Text = "Microsoft Store unlocked - REQUIRES RESET FROM APPS & FEATURES IN SETTINGS - RE-LOCK ONCE FINISHED WITH IT!"
     MSStoreUnlock
 })
 
@@ -385,8 +599,8 @@ Function MSStoreLock{
     New-ItemProperty -Path $registryPathWindowsStore -Name $NameRemoveWindowsStore -Value 1 -PropertyType DWORD -Force | Out-Null
     write-host "Local Machine key edited, Windows Update Auto-Update, Microsoft Store disabled"
 }
-$WPFMSStoreLock.Add_Click({ 
-    $WPFLoaflog2.Text = "Microsoft Store locked"
+$WPFButtonMSStoreLock.Add_Click({ 
+    $WPFLoaflog3.Text = "Microsoft Store locked"
     MSStoreLock
 })
 
@@ -414,8 +628,8 @@ Function LockScreenForce{
     New-ItemProperty -Path $registryPathLockScreenKey -Name $NameLockImage -Value $SelectedFile -PropertyType string -Force | Out-Null
     write-host "Local Machine key edited, lock screen image set"
 }
-$WPFLockScreenUnlock.Add_Click({ 
-    $WPFLoaflog2.Text = "Lock screen editing unlocked"
+$WPFButtonLockScreenUnlock.Add_Click({ 
+    $WPFLoaflog3.Text = "Lock screen editing unlocked"
     LockScreenForce
 })
 
@@ -423,26 +637,7 @@ $WPFLockScreenUnlock.Add_Click({
 #Experimental functions
 #-------------------------
 
-#Oracle 32bit/64bit Package installer
-#Launcher in LocalData, files in RemoteData
-Function installOraPackage{
-    #start powershell ((Split-Path $MyInvocation.InvocationName) + ".\LocalData\oracleinstallerpackage.ps1")
-    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\oracleinstallerpackage.ps1'"
-}
-$WPFOraclePackage.Add_Click({ 
-    $WPFLoaflog3.Text = "Installing Oracle 32bit/64bit Package"
-    installOraPackage
-})
-
-#Retire Machine
-#Files in RemoteData
-Function retireMachine{
-    start-process powershell.exe -argument "& '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\retiremachine.ps1'"
-}
-$WPFRetireLocal.Add_Click({ 
-    $WPFLoaflog3.Text = "Retiring Local Machine"
-    retireMachine
-})
+#Nothing here right now, all functions are stable
 
 #-------------------------
 #Launch UI

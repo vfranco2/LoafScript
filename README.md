@@ -7,14 +7,16 @@
 
 ## Functions:
 - Update checker, one-click install
+- Edit LoafScript Theme
 
 - Option for Oracle enviro variables/.ora files only
 - Sets BIOS Password
-- Copies required Admin Process data
 - Runs HP Image Assistant (newest in _Post Image)
 - Runs Windows Update Assistant
-- Installs Oracle 32bit
-- Installs Oracle 64bit
+
+- Copies required Admin Process data
+- Installs PowerBI 32bit or 64bit
+- Installs Oracle 32bit, Oracle 64bit, or the Oracle 32bit/64bit Package
 
 - Checks Oracle install (tnsping adtlev)
 - Checks Bitlocker status
@@ -22,13 +24,12 @@
 
 - Uninstalls Oracle
 - Uninstalls Microsoft Office
+- Retires Local Machine
 
 - Swaps Light/Dark theme
+- Unlocks Windows Theme Editing
 - Unlocks/Locks Microsoft Store
 - Unlocks background
 - Unlocks Lock Screen Editing
 
--Installs Oracle 32bit/64bit Package
--Retires Local Machine
-
-# V3.3.0 5/19/2021
+# V3.4.0 5/20/2021

@@ -30,7 +30,7 @@ catch{
     Write-Host $bars"| No Complete Oracle Install Found" -ForegroundColor Red
 }
 Write-Host $bars
-Write-Host $bars"| Hit Enter to continue installation." -ForegroundColor Yellow
+Write-Host $bars"| Hit Enter to continue uninstallation." -ForegroundColor Yellow
 Write-Host "| Otherwise, close this window to exit." -ForegroundColor Yellow
 Write-Host $bars
 pause
