@@ -12,7 +12,7 @@
 #-------------------------
 # LoafScript Version, Output Variables
 #-------------------------
-$CurrentVersion = "3.4.0"
+$CurrentVersion = "3.4.1"
 
 
 #-------------------------
@@ -125,9 +125,10 @@ Function LoafScriptThemer{
 
         #Will be 0 if no users found, set theme to light and create profile with light as default
         if ($FoundUser -eq 0){
-            $ThemeFile.User = $env:UserName
-            $ThemeFile.Theme = 'light'
-            $ThemeFile | Export-Csv '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\themes.csv' -Append
+            $userobj = New-Object PSObject
+            $userobj | Add-Member Noteproperty -Name User -value $env:UserName
+            $userobj | Add-Member Noteproperty -Name Theme -value 'light'
+            $userobj | Export-CSV -Path '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\themes.csv' -Append
         }
 
         #Set theme colors

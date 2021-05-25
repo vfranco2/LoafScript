@@ -32,4 +32,4 @@
 - Unlocks background
 - Unlocks Lock Screen Editing
 
-# V3.4.0 5/20/2021
+# V3.4.1 5/25/2021

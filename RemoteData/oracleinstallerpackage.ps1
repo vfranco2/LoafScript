@@ -34,7 +34,7 @@ try{
     [System.Environment]::SetEnvironmentVariable('PATH', $pathLink, 'Machine')
 
     #Environment Variables
-    [Environment]::SetEnvironmentVariable("TNS_ADMIN","C:\Oracle\product\12.1.0\dbhome_1\network\admin","Machine")
+    [Environment]::SetEnvironmentVariable("TNS_ADMIN","C:\Oracle64\product\12.1.0\dbhome_1\network\admin","Machine")
     [Environment]::SetEnvironmentVariable("ORACLE_HOME","C:\Windows\System32\OracleLink\product\12.1.0\dbhome_1","Machine")
 }
 catch{

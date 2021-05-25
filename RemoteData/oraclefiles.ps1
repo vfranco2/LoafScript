@@ -28,6 +28,8 @@ try{
     ELSEIF((Test-Path -path "C:\Oracle64") -And (Test-Path -path "C:\Oracle32")) {
         Write-Host $bars"| Found Oracle 64bit & Oracle 32bit Package" -ForegroundColor Magenta
         
+        [Environment]::SetEnvironmentVariable("TNS_ADMIN","C:\Oracle64\product\12.1.0\dbhome_1\network\admin","Machine")
+
         try{
             If(Test-Path -path "C:\Oracle32\product\12.1.0\dbhome_1\network\admin"){
                 xcopy "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\*.ora" "C:\Oracle32\product\12.1.0\dbhome_1\network\admin" /y
