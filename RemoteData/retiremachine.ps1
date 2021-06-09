@@ -17,11 +17,18 @@ Write-Host $bars
 pause
 
 try{
+    Write-Host $bars"| Set Administrator Pass"$success -ForegroundColor Green
     net user Administrator Lemon001
-    Write-Host $bars"| Set Admin Pass"$success -ForegroundColor Green
 }
 catch{
-    Write-Host $bars"| Set Admin Pass"$failed -ForegroundColor Red
+    Write-Host $bars"| Set Administrator Pass"$failed -ForegroundColor Red
+}
+try{
+    Write-Host $bars"| Set jsparrow Pass"$success -ForegroundColor Green
+    net user jsparrow Lemon001
+}
+catch{
+    Write-Host $bars"| Set jsparrow Pass"$failed -ForegroundColor Red
 }
 try{
     Add-Computer -WorkgroupName WG

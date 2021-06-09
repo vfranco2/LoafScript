@@ -1,4 +1,3 @@
-
 # LoafScript
 ## Built by Vlad Franco and Jagjot Singh
 
@@ -27,9 +26,9 @@
 - Retires Local Machine
 
 - Swaps Light/Dark theme
-- Unlocks Windows Theme Editing
-- Unlocks/Locks Microsoft Store
 - Unlocks background
+- Unlocks Windows Theme Editing
 - Unlocks Lock Screen Editing
+- Unlocks/Locks Microsoft Store
 
-# V3.4.1 5/25/2021
+# V3.4.2 6/9/2021

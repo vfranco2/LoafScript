@@ -12,7 +12,7 @@
 #-------------------------
 # LoafScript Version, Output Variables
 #-------------------------
-$CurrentVersion = "3.4.1"
+$CurrentVersion = "3.4.2"
 
 
 #-------------------------
@@ -105,6 +105,15 @@ Function LoafScriptThemer{
     $Sea = '#4D9DE0'
     $Champagne = '#EEE0CB'
     $Greenery = '#6BAB90'
+    $Sand = '#ffe8d6'
+    $Lava = '#E76F51'
+    $Ice = '#ade8f4'
+    $Snow = '#e9ecef'
+    $Rock = '#949494'
+    $YeezyBlue = '#9dadad'
+    $YeezyTan = '#dac6ab'
+    $YeezyAsh = '#939499'
+
     
     #Set theme to light in case of .csv error
     $SelectedTheme = "light"
@@ -145,16 +154,34 @@ Function LoafScriptThemer{
             $TabColor = $Sea
         }
         ELSEIF($SelectedTheme -eq "nature"){
-            $BGColor = '#EEE0CB'
+            $BGColor = $Champagne
             $TextColor = '#000000'
             $ButtonColor = $Greenery
             $TabColor = $Greenery
+        }
+        ELSEIF($SelectedTheme -eq "volcanic"){
+            $BGColor = $Sand
+            $TextColor = '#000000'
+            $ButtonColor = $Lava
+            $TabColor = $Rock
+        }
+        ELSEIF($SelectedTheme -eq "arctic"){
+            $BGColor = $Snow
+            $TextColor = '#000000'
+            $ButtonColor = $Ice
+            $TabColor = $Rock
+        }
+        ELSEIF($SelectedTheme -eq "yeezy"){
+            $BGColor = $YeezyAsh
+            $TextColor = '#000000'
+            $ButtonColor = $YeezyTan
+            $TabColor = $YeezyBlue
         }
         ELSEIF($SelectedTheme -eq "light"){ }
         ELSE{ }
 
         #Assign colors to .xaml elements, looping through collections of them
-        IF(($SelectedTheme -eq "dark") -or ($SelectedTheme -eq "cobalt") -or ($SelectedTheme -eq "nature")){
+        IF(($SelectedTheme -eq "dark") -or ($SelectedTheme -eq "cobalt") -or ($SelectedTheme -eq "nature") -or ($SelectedTheme -eq "volcanic") -or ($SelectedTheme -eq "arctic") -or ($SelectedTheme -eq "yeezy")){
 
             $WPFLoafGuiMainWindow.Background = $BGColor
             $WPFLoafGuiTabControl.Background = $BGColor
@@ -170,7 +197,8 @@ Function LoafScriptThemer{
                             $WPFButtonMSStoreLock,$WPFButtonMSStoreUnlock,$WPFButtonOracheck,$WPFButtonOraclePackage,$WPFButtonOrainstall32,$WPFButtonOrainstall64,$WPFButtonOraproperties,
                             $WPFButtonOrauninstall,$WPFButtonProgfeat,$WPFButtonRetireLocal,$WPFButtonRunhpia,$WPFButtonRunupdateassistant,$WPFButtonThemeUnlock,$WPFButtonPowerBIInstall32,$WPFButtonPowerBIInstall64)
 
-            $GroupBoxlist = @($WPFLoafGuiGroupBoxSetup,$WPFLoafGuiGroupBoxVerification,$WPFLoafGuiGroupBoxUninstalls,$WPFLoafGuiGroupBoxSoftware,$WPFLoafGuiGroupBoxOracle,$WPFLoafGuiGroupBoxPersonalization,$WPFLoafGuiGroupBoxExperimental)
+            $GroupBoxlist = @($WPFLoafGuiGroupBoxSetup,$WPFLoafGuiGroupBoxVerification,$WPFLoafGuiGroupBoxUninstalls,$WPFLoafGuiGroupBoxSoftware,$WPFLoafGuiGroupBoxOracle,
+                              $WPFLoafGuiGroupBoxPersonalization,$WPFLoafGuiGroupBoxThemes,$WPFLoafGuiGroupBoxExperimental)
 
             $Loafloglist = @($WPFLoaflog1,$WPFLoaflog2,$WPFLoaflog3,$WPFLoaflog4)
 
@@ -233,6 +261,15 @@ $WPFButtonCobaltTheme.Add_Click({
 })
 $WPFButtonNatureTheme.Add_Click({
     ChangeLoafScriptTheme nature
+})
+$WPFButtonVolcanicTheme.Add_Click({
+    ChangeLoafScriptTheme volcanic
+})
+$WPFButtonArcticTheme.Add_Click({
+    ChangeLoafScriptTheme arctic
+})
+$WPFButtonYeezyTheme.Add_Click({
+    ChangeLoafScriptTheme yeezy
 })
 
 #-------------------------
@@ -522,20 +559,72 @@ $WPFButtonColorUnlock.Add_Click({
 })
 
 #Background keys
-$registryPathBg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop"
-$NameBG = "NoChangingWallPaper"
+$registryPathBgUnlock = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop"
+$registryPathBgSetter = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System"
+$NameBgUnlock = "NoChangingWallPaper"
+$NameBgLink = "Wallpaper"
+$NameBgStyle = "WallpaperStyle"
 
 #Force Unlock Background (Theme stuff)
 Function Bgforce{
-    IF(!(Test-Path $registryPathBg)) {
-        New-Item -Path $registryPathBg -Force | Out-Null
+    #Unlock Editing
+    IF(!(Test-Path $registryPathBgUnlock)) {
+        New-Item -Path $registryPathBgUnlock -Force | Out-Null
     }
-    New-ItemProperty -Path $registryPathBg -Name $NameBG -Value 0 -PropertyType DWORD -Force | Out-Null
+    New-ItemProperty -Path $registryPathBgUnlock -Name $NameBgUnlock -Value 0 -PropertyType DWORD -Force | Out-Null
     write-host "Local Machine key added, edited, background editing unlocked"
+
+    #Set Background Values
+    IF(!(Test-Path $registryPathBgSetter)) {
+        New-Item -Path $registryPathBgSetter -Force | Out-Null
+    }
+    #New-ItemProperty -Path $registryPathBgSetter -Name $NameBgLink -Value 0 -PropertyType DWORD -Force | Out-Null
+    New-ItemProperty -Path $registryPathBgSetter -Name $NameBgStyle -Value "4" -PropertyType string -Force | Out-Null
+    write-host "Local Machine key edited, lock screen editing unlocked"
+
+    Add-Type -AssemblyName System.Windows.Forms
+    $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+    $OpenFileDialog.Title = "Please Select File"
+    $OpenFileDialog.InitialDirectory = [Environment]::GetFolderPath('Desktop')
+    $OpenFileDialog.filter = 'JPG Images (*.jpg)|*.jpg|PNG Images (*.png)|*.png'
+    $OpenFileDialog.ShowDialog() | Out-Null
+    $Global:SelectedFile = $OpenFileDialog.FileName
+
+    New-ItemProperty -Path $registryPathBgSetter -Name $NameBgLink -Value $SelectedFile -PropertyType string -Force | Out-Null
+    write-host "Local Machine key edited, background image set"
 }
 $WPFButtonBgUnlock.Add_Click({ 
     $WPFLoaflog3.Text = "Background editing unlocked"
     Bgforce
+})
+
+#Lock Screen keys
+$registryPathLockScreenKey = "HKLM:\Software\Policies\Microsoft\Windows\Personalization"
+$NameLockChange = "NoChangingLockScreen"
+$NameLockImage = "LockScreenImage"
+
+#Force Unlock Lock Screen (Theme stuff)
+Function LockScreenForce{
+    IF(!(Test-Path $registryPathLockScreenKey)) {
+        New-Item -Path $registryPathLockScreenKey -Force | Out-Null
+    }
+    New-ItemProperty -Path $registryPathLockScreenKey -Name $NameLockChange -Value 0 -PropertyType DWORD -Force | Out-Null
+    write-host "Local Machine key edited, lock screen editing unlocked"
+
+    Add-Type -AssemblyName System.Windows.Forms
+    $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+    $OpenFileDialog.Title = "Please Select File"
+    $OpenFileDialog.InitialDirectory = [Environment]::GetFolderPath('Desktop')
+    $OpenFileDialog.filter = 'JPG Images (*.jpg)|*.jpg|PNG Images (*.png)|*.png'
+    $OpenFileDialog.ShowDialog() | Out-Null
+    $Global:SelectedFile = $OpenFileDialog.FileName
+
+    New-ItemProperty -Path $registryPathLockScreenKey -Name $NameLockImage -Value $SelectedFile -PropertyType string -Force | Out-Null
+    write-host "Local Machine key edited, lock screen image set"
+}
+$WPFButtonLockScreenUnlock.Add_Click({ 
+    $WPFLoaflog3.Text = "Lock screen editing unlocked"
+    LockScreenForce
 })
 
 #Microsoft Store keys
@@ -603,35 +692,6 @@ Function MSStoreLock{
 $WPFButtonMSStoreLock.Add_Click({ 
     $WPFLoaflog3.Text = "Microsoft Store locked"
     MSStoreLock
-})
-
-#Lock Screen keys
-$registryPathLockScreenKey = "HKLM:\Software\Policies\Microsoft\Windows\Personalization"
-$NameLockChange = "NoChangingLockScreen"
-$NameLockImage = "LockScreenImage"
-
-#Force Unlock Lock Screen (Theme stuff)
-Function LockScreenForce{
-    IF(!(Test-Path $registryPathLockScreenKey)) {
-        New-Item -Path $registryPathLockScreenKey -Force | Out-Null
-    }
-    New-ItemProperty -Path $registryPathLockScreenKey -Name $NameLockChange -Value 0 -PropertyType DWORD -Force | Out-Null
-    write-host "Local Machine key edited, lock screen editing unlocked"
-
-    Add-Type -AssemblyName System.Windows.Forms
-    $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
-    $OpenFileDialog.Title = "Please Select File"
-    $OpenFileDialog.InitialDirectory = [Environment]::GetFolderPath('Desktop')
-    $OpenFileDialog.filter = 'JPG Images (*.jpg)|*.jpg|PNG Images (*.png)|*.png'
-    $OpenFileDialog.ShowDialog() | Out-Null
-    $Global:SelectedFile = $OpenFileDialog.FileName
-
-    New-ItemProperty -Path $registryPathLockScreenKey -Name $NameLockImage -Value $SelectedFile -PropertyType string -Force | Out-Null
-    write-host "Local Machine key edited, lock screen image set"
-}
-$WPFButtonLockScreenUnlock.Add_Click({ 
-    $WPFLoaflog3.Text = "Lock screen editing unlocked"
-    LockScreenForce
 })
 
 #-------------------------
