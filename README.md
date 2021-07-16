@@ -33,4 +33,4 @@
 - Unlocks Lock Screen Editing
 - Unlocks/Locks Microsoft Store
 
-# V3.5.0 7/16/2021
+# V3.5.1 7/16/2021

@@ -12,7 +12,7 @@
 #-------------------------
 # LoafScript Version, Output Variables
 #-------------------------
-$CurrentVersion = "3.5.0"
+$CurrentVersion = "3.5.1"
 
 
 #-------------------------
@@ -75,16 +75,15 @@ Get-FormVariables
 #Shuffles between 10 LoafScript icons
 Function LoafScriptIconShuffle {
     $LoafIconElements = @($WPFLoafIconSetup,$WPFLoafIconInstalls,$WPFLoafIconPersonalization,$WPFLoafIconExperimental)
-    $LoafIcons = @('LoafIcon.png','LoafIcon180.png','LoafIconAnniversary.png','LoafIconBite.png','LoafIconBurnt.png',
-                   'LoafIconButter.png','LoafIconCPU.png','LoafIconMoldy.png','LoafIconTerminal.png','LoafIconToasted.png',
-                   'LoafIconAlliance','LoafIconNeon','LoafIconPS','LoafIconVF')
+    $LoafIcons = @('LoafIcon.png','LoafIcon180.png','LoafIconAnniversary.png','LoafIconBite.png','LoafIconBurnt.png','LoafIconButter.png','LoafIconCPU.png','LoafIconMoldy.png','LoafIconTerminal.png','LoafIconToasted.png',
+                   'LoafIconAlliance.png','LoafIconNeon.png','LoafIconPS.png','LoafIconVF.png')
     $LoafRemoteSource = '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\LoafIcons\'
     try{
         
         #Loop through all icons in .xaml file, assign image to them
         foreach ($IconElement in $LoafIconElements) {
             #Random number gen
-            $RandoLoaf = (Get-Random -Maximum 9)
+            $RandoLoaf = (Get-Random -Maximum 13)
             $IconElement.Source = ($LoafRemoteSource + $LoafIcons[$RandoLoaf])
         }
     }
