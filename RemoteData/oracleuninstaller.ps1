@@ -1,4 +1,4 @@
-﻿#LoafScript built by Vlad Franco and Jagjot Singh
+﻿#LoafScript built by Vlad Franco, Kristian Rica, Michael Hang, and Jagjot Singh
 
 #Uninstalls Oracle 32bit, Oracle 64bit, and the Oracle 32bit/64bit Package
 

@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoafGui"
         mc:Ignorable="d"
-        Title="" Height="516" Width="400">
+        Title="LoafScript" Height="516" Width="400">
   <TabControl x:Name="LoafGuiTabControl">
     <TabItem Header="Setup" x:Name="LoafGuiTabSetup">
       <Grid Margin="4">
@@ -95,8 +95,9 @@
       <Grid Margin="4">
         <Grid.RowDefinitions>
           <RowDefinition Height="66"/>
+          <RowDefinition Height="110"/>
           <RowDefinition Height="88"/>
-          <RowDefinition Height="88"/>
+          <RowDefinition Height="110"/>
           <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -112,6 +113,7 @@
               <RowDefinition Height="22"/>
               <RowDefinition Height="22"/>
               <RowDefinition Height="22"/>
+							<RowDefinition Height="22"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="120"/>
@@ -119,6 +121,7 @@
             <Button Grid.Row="0" Margin="1" x:Name="ButtonAdminprocess" Content="Admin Process .dll"/>
 						<Button Grid.Row="1" Margin="1" x:Name="ButtonPowerBIInstall32" Content="PowerBI 32bit"/>
 						<Button Grid.Row="2" Margin="1" x:Name="ButtonPowerBIInstall64" Content="PowerBI 64bit"/>
+						<Button Grid.Row="3" Margin="1" x:Name="ButtonNotepadPaint" Content="Notepad/Paint Install"/>
           </Grid>
 				</GroupBox>
 
@@ -138,7 +141,25 @@
         	</Grid>
 				</GroupBox>
 
-        <TextBox Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" x:Name="Loaflog2" TextWrapping="Wrap" Text=""/>
+				<GroupBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Header="Cisco" x:Name="LoafGuiGroupBoxCisco">
+		    	<Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="22"/>
+							<RowDefinition Height="22"/>
+							<RowDefinition Height="22"/>
+							<RowDefinition Height="22"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Margin="1" x:Name="ButtonCiscoClient" Content="Cisco Client"/>
+						<Button Grid.Row="1" Margin="1" x:Name="ButtonCiscoISE" Content="Cisco ISE"/>
+						<Button Grid.Row="2" Margin="1" x:Name="ButtonCiscoAMP" Content="Cisco AMP"/>
+						<Button Grid.Row="3" Margin="1" x:Name="ButtonCiscoXML" Content="Cisco XML"/>
+        	</Grid>
+				</GroupBox>
+
+        <TextBox Grid.Row="0" Grid.RowSpan="5" Grid.Column="1" x:Name="Loaflog2" TextWrapping="Wrap" Text=""/>
 
       </Grid>
     </TabItem>

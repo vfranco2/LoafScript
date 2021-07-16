@@ -1,5 +1,5 @@
 # LoafScript
-## Built by Vlad Franco and Jagjot Singh
+## Built by Vlad Franco, Kristian Rica, Michael Hang, and Jagjot Singh
 
 ### Copy LoafScript X.Y.Z to your H drive for use on any machine. May require copying folder from H drive to local C drive to run.
 ### Right click LoafScript.ps1 and run with PowerShell to launch.
@@ -16,6 +16,8 @@
 - Copies required Admin Process data
 - Installs PowerBI 32bit or 64bit
 - Installs Oracle 32bit, Oracle 64bit, or the Oracle 32bit/64bit Package
+- Installs Notepad/Paint for Windows 10 20H2 and up
+- Installs Cisco Client, ISE, AMP, and the .xml file
 
 - Checks Oracle install (tnsping adtlev)
 - Checks Bitlocker status
@@ -31,4 +33,4 @@
 - Unlocks Lock Screen Editing
 - Unlocks/Locks Microsoft Store
 
-# V3.4.2 6/9/2021
+# V3.5.0 7/16/2021

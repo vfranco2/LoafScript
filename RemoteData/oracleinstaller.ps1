@@ -1,4 +1,4 @@
-﻿#LoafScript built by Vlad Franco and Jagjot Singh
+﻿#LoafScript built by Vlad Franco, Kristian Rica, Michael Hang, and Jagjot Singh
 
 #Installs Oracle 32 or 64 Bit, depending on input parameter
 

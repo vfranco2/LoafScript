@@ -1,4 +1,4 @@
-﻿#LoafScript built by Vlad Franco and Jagjot Singh
+﻿#LoafScript built by Vlad Franco, Kristian Rica, Michael Hang, and Jagjot Singh
 #This script is designed to streamline the new PC preparation process.
 
 #----------------------
@@ -12,7 +12,7 @@
 #-------------------------
 # LoafScript Version, Output Variables
 #-------------------------
-$CurrentVersion = "3.4.2"
+$CurrentVersion = "3.5.0"
 
 
 #-------------------------
@@ -75,7 +75,9 @@ Get-FormVariables
 #Shuffles between 10 LoafScript icons
 Function LoafScriptIconShuffle {
     $LoafIconElements = @($WPFLoafIconSetup,$WPFLoafIconInstalls,$WPFLoafIconPersonalization,$WPFLoafIconExperimental)
-    $LoafIcons = @('LoafIcon.png','LoafIcon180.png','LoafIconAnniversary.png','LoafIconBite.png','LoafIconBurnt.png','LoafIconButter.png','LoafIconCPU.png','LoafIconMoldy.png','LoafIconTerminal.png','LoafIconToasted.png')
+    $LoafIcons = @('LoafIcon.png','LoafIcon180.png','LoafIconAnniversary.png','LoafIconBite.png','LoafIconBurnt.png',
+                   'LoafIconButter.png','LoafIconCPU.png','LoafIconMoldy.png','LoafIconTerminal.png','LoafIconToasted.png',
+                   'LoafIconAlliance','LoafIconNeon','LoafIconPS','LoafIconVF')
     $LoafRemoteSource = '\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\LoafIcons\'
     try{
         
@@ -195,10 +197,11 @@ Function LoafScriptThemer{
 
             $Buttonlist = @($WPFButtonAdminprocess,$WPFButtonBgUnlock,$WPFButtonBioscheck,$WPFButtonBiosPass,$WPFButtonBitcheck,$WPFButtonColorUnlock,$WPFButtonLockScreenUnlock,
                             $WPFButtonMSStoreLock,$WPFButtonMSStoreUnlock,$WPFButtonOracheck,$WPFButtonOraclePackage,$WPFButtonOrainstall32,$WPFButtonOrainstall64,$WPFButtonOraproperties,
-                            $WPFButtonOrauninstall,$WPFButtonProgfeat,$WPFButtonRetireLocal,$WPFButtonRunhpia,$WPFButtonRunupdateassistant,$WPFButtonThemeUnlock,$WPFButtonPowerBIInstall32,$WPFButtonPowerBIInstall64)
+                            $WPFButtonOrauninstall,$WPFButtonProgfeat,$WPFButtonRetireLocal,$WPFButtonRunhpia,$WPFButtonRunupdateassistant,$WPFButtonThemeUnlock,$WPFButtonPowerBIInstall32,$WPFButtonPowerBIInstall64,
+                            $WPFButtonCiscoClient, $WPFButtonCiscoISE,$WPFButtonCiscoAMP,$WPFButtonCiscoXML,$WPFButtonNotepadPaint)
 
             $GroupBoxlist = @($WPFLoafGuiGroupBoxSetup,$WPFLoafGuiGroupBoxVerification,$WPFLoafGuiGroupBoxUninstalls,$WPFLoafGuiGroupBoxSoftware,$WPFLoafGuiGroupBoxOracle,
-                              $WPFLoafGuiGroupBoxPersonalization,$WPFLoafGuiGroupBoxThemes,$WPFLoafGuiGroupBoxExperimental)
+                              $WPFLoafGuiGroupBoxPersonalization,$WPFLoafGuiGroupBoxThemes,$WPFLoafGuiGroupBoxExperimental,$WPFLoafGUIGroupBoxCisco)
 
             $Loafloglist = @($WPFLoaflog1,$WPFLoaflog2,$WPFLoaflog3,$WPFLoaflog4)
 
@@ -278,7 +281,7 @@ $WPFButtonYeezyTheme.Add_Click({
 #Checks the LoafScript folder in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\ (Inside the parent LoafScript folder!)
 #If the version of this script does not match, it prompts the user
 Function downloadNewLoafScript{
-    $WPFLoafGuiMainWindow.Title = "LoafScript " + $CurrentVersion + " - 2-Year Anniversary Edition"
+    $WPFLoafGuiMainWindow.Title = "LoafScript " + $CurrentVersion
     $NewestVersion = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
     $CompareVersion = $NewestVersion.ToString()
     $CompareVersion = $CompareVersion.substring(81)
@@ -472,6 +475,16 @@ $WPFButtonPowerBIInstall64.Add_Click({
     installPowerBI 64
 })
 
+#Install Notepad/Paint
+Function NotePaint{
+    dism /online /add-capability /capabilityname:Microsoft.Windows.MSPaint~~~~0.0.1.0
+    dism /online /add-capability /capabilityname:Microsoft.Windows.Notepad~~~~0.0.1.0
+}
+$WPFButtonNotepadPaint.Add_Click({ 
+    $WPFLoaflog2.Text = "Installing Notepad and Paint"
+    NotePaint
+})
+
 #Oracle Installers
 #Launcher in LocalData, files in \\nacorpcl\NOC_Install_Files\NOC\CDS\Client\_Post Image\W10\1.Oracle
 #32bit Installer
@@ -502,6 +515,56 @@ $WPFButtonOraclePackage.Add_Click({
     $WPFLoaflog2.Text = "Installing Oracle 32bit/64bit Package"
     installOraPackage
 })
+
+#Cisco Installers
+#Cisco Client Installer
+Function installCiscoClient{
+    $CCInstaller = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\Cisco\INSTALL_FOR_CISCO_AMP.exe"
+    $ScriptPath = Split-Path $MyInvocation.InvocationName
+    & $CCInstaller
+}
+$WPFButtonCiscoClient.Add_Click({
+    $WPFLoaflog2.Text = "Installing Cisco Client"
+    installCiscoClient
+})
+
+#Cisco ISE Installer
+Function installCiscoISE{
+    $CIInstaller = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\Cisco\CISCO_ISE_INSTALL.msi"
+    $ScriptPath = Split-Path $MyInvocation.InvocationName
+    & $CIInstaller
+}
+$WPFButtonCiscoISE.Add_Click({
+    $WPFLoaflog2.Text = "Installing Cisco ISE"
+    installCiscoISE
+})
+
+#Cisco AMP Installer
+Function installCiscoAMP{
+    $CAInstaller = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\RemoteData\Cisco\INSTALL_FOR_CISCO_AMP.exe"
+    $ScriptPath = Split-Path $MyInvocation.InvocationName
+    & $CAInstaller
+}
+$WPFButtonCiscoAMP.Add_Click({
+    $WPFLoaflog2.Text = "Installing Cisco AMP"
+    installCiscoAMP
+})
+
+#Cisco XML
+#Files in RemoteData
+Function installCiscoXML{
+    Try{
+        Copy-Item "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\Loafscript\RemoteData\Cisco\hap_prod_vpn_client_profile_ise.xml.xml" -Destination "C:\ProgramData\Cisco\Cisco AnyConnect Secure Mobility Client\Profile" -Recurse -ErrorAction Stop
+    }
+    Catch{
+        "Error occured!"
+    }
+}
+$WPFButtonCiscoXML.Add_Click({ 
+    $WPFLoaflog2.Text = "Copying .XML file to Cisco Folder"
+    installCiscoXML
+})
+
 
 #-------------------------
 #Personalization functions
