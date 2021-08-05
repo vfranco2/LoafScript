@@ -8,156 +8,102 @@
         mc:Ignorable="d"
         Title="LoafScript" Height="516" Width="400">
   <TabControl x:Name="LoafGuiTabControl">
-    <TabItem Header="Setup" x:Name="LoafGuiTabSetup">
+
+		<TabItem Header="Setup" x:Name="LoafGuiTabSetup">
       <Grid Margin="4">
-        <Grid.RowDefinitions>
-	    		<RowDefinition Height="66"/>
-	        <RowDefinition Height="110"/>
-	        <RowDefinition Height="88"/>
-	        <RowDefinition Height="88"/>
-	        <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
-				<Grid Grid.Row="0" Grid.Column="0" Margin="0">
-	        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-	        </Grid.RowDefinitions>
-	        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="66"/>
-            <ColumnDefinition Width="*"/>
-	        </Grid.ColumnDefinitions>
-	        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" x:Name="LoafIconSetup" HorizontalAlignment="Left"/>
-	        <TextBlock Grid.Row="0" Grid.Column="1" Margin="0" x:Name="LoafScriptUpdateText" TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" Visibility="hidden">Update Available!</TextBlock>
-	    		<Button Grid.Row="1" Grid.Column="1" Margin="0" x:Name="LoafScriptUpdater" Content="Download" Background="#f0ad4e" Visibility="hidden"/>
-        </Grid>
+				<StackPanel Grid.Column="0">
 
-        <GroupBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Header="Setup" x:Name="LoafGuiGroupBoxSetup">
-		    	<Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Margin="1" x:Name="ButtonOraproperties" Content="Oracle TNS/Env"/>
-            <Button Grid.Row="1" Margin="1" x:Name="ButtonBiosPass" Content="BIOS PW"/>
-            <Button Grid.Row="2" Margin="1" x:Name="ButtonRunhpia" Content="Run HPIA"/>
-            <Button Grid.Row="3" Margin="1" x:Name="ButtonRunupdateassistant" Content="Windows Update"/>
-          </Grid>
-				</GroupBox>
+					<Grid Margin="0">
+		        <Grid.RowDefinitions>
+	            <RowDefinition Height="40"/>
+	            <RowDefinition Height="26"/>
+		        </Grid.RowDefinitions>
+		        <Grid.ColumnDefinitions>
+	            <ColumnDefinition Width="66"/>
+	            <ColumnDefinition Width="*"/>
+		        </Grid.ColumnDefinitions>
+		        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" x:Name="LoafIconSetup" HorizontalAlignment="Left"/>
+		        <TextBlock Grid.Row="0" Grid.Column="1" Margin="0" x:Name="LoafScriptUpdateText" TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" Visibility="hidden">Update Available!</TextBlock>
+		    		<Button Grid.Row="1" Grid.Column="1" Margin="0" x:Name="LoafScriptUpdater" Content="Download" Background="#f0ad4e" Visibility="hidden"/>
+	        </Grid>
 
-        <GroupBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Header="Verification" x:Name="LoafGuiGroupBoxVerification">
-		    	<Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Margin="1" x:Name="ButtonOracheck" Content="Check Oracle"/>
-            <Button Grid.Row="1" Margin="1" x:Name="ButtonBitcheck" Content="Check Bitlocker"/>
-            <Button Grid.Row="2" Margin="1" x:Name="ButtonBioscheck" Content="Check Bios"/>
-          </Grid>
-        </GroupBox>
+	        <GroupBox HorizontalAlignment="Center" Header="Setup" x:Name="LoafGuiGroupBoxSetup">
+			    	<StackPanel Width="120">
+	            <Button Margin="1" x:Name="ButtonOraproperties" Content="Oracle TNS/Env"/>
+	            <Button Margin="1" x:Name="ButtonBiosPass" Content="BIOS PW"/>
+	            <Button Margin="1" x:Name="ButtonRunhpia" Content="Run HPIA"/>
+	            <Button Margin="1" x:Name="ButtonRunupdateassistant" Content="Windows Update"/>
+	            <Button Margin="1" x:Name="ButtonRunBGInfo" Content="BGInfo"/>
+	          </StackPanel>
+					</GroupBox>
 
-        <GroupBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Header="Uninstalls" x:Name="LoafGuiGroupBoxUninstalls">
-		    	<Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Margin="1" x:Name="ButtonOrauninstall" Content="Oracle"/>
-            <Button Grid.Row="1" Margin="1" x:Name="ButtonProgfeat" Content="Office"/>
-						<Button Grid.Row="2" Margin="1" x:Name="ButtonRetireLocal" Content="Retire Machine"/>
-          </Grid>
-      	</GroupBox>
+	        <GroupBox HorizontalAlignment="Center" Header="Verification" x:Name="LoafGuiGroupBoxVerification">
+			    	<StackPanel Width="120">
+	            <Button Margin="1" x:Name="ButtonOracheck" Content="Check Oracle"/>
+	            <Button Margin="1" x:Name="ButtonBitcheck" Content="Check Bitlocker"/>
+	            <Button Margin="1" x:Name="ButtonBioscheck" Content="Check Bios"/>
+	            <Button Margin="1" x:Name="ButtonHPDiag" Content="Run HP Diagnostics"/>
+	          </StackPanel>
+	        </GroupBox>
 
-        <TextBox Grid.Row="0" Grid.RowSpan="5" Grid.Column="1" x:Name="Loaflog1" TextWrapping="Wrap" Text=""/>
+	        <GroupBox HorizontalAlignment="Center" Header="Uninstalls" x:Name="LoafGuiGroupBoxUninstalls">
+			    	<StackPanel Width="120">
+	            <Button Margin="1" x:Name="ButtonOrauninstall" Content="Oracle"/>
+	            <Button Margin="1" x:Name="ButtonProgfeat" Content="Office"/>
+							<Button Margin="1" x:Name="ButtonRetireLocal" Content="Retire Machine"/>
+	          </StackPanel>
+	      	</GroupBox>
+
+				</StackPanel>
+
+        <TextBox Grid.Column="1" x:Name="Loaflog1" TextWrapping="Wrap" Text=""/>
 
       </Grid>
   	</TabItem>
 
 		<TabItem Header="Installs" x:Name="LoafGuiTabInstalls">
       <Grid Margin="4">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="66"/>
-          <RowDefinition Height="110"/>
-          <RowDefinition Height="88"/>
-          <RowDefinition Height="110"/>
-          <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
-        <Image Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" x:Name="LoafIconInstalls"/>
+				<StackPanel Grid.Column="0">
 
-        <GroupBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Header="Software" x:Name="LoafGuiGroupBoxSoftware">
-		    	<Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-							<RowDefinition Height="22"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Margin="1" x:Name="ButtonAdminprocess" Content="Admin Process .dll"/>
-						<Button Grid.Row="1" Margin="1" x:Name="ButtonPowerBIInstall32" Content="PowerBI 32bit"/>
-						<Button Grid.Row="2" Margin="1" x:Name="ButtonPowerBIInstall64" Content="PowerBI 64bit"/>
-						<Button Grid.Row="3" Margin="1" x:Name="ButtonNotepadPaint" Content="Notepad/Paint Install"/>
-          </Grid>
-				</GroupBox>
+	        <Image Height="66" HorizontalAlignment="Left" x:Name="LoafIconInstalls"/>
 
-				<GroupBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Header="Oracle" x:Name="LoafGuiGroupBoxOracle">
-		    	<Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Margin="1" x:Name="ButtonOrainstall32" Content="Oracle 32"/>
-            <Button Grid.Row="1" Margin="1" x:Name="ButtonOrainstall64" Content="Oracle 64"/>
-            <Button Grid.Row="2" Margin="1" x:Name="ButtonOraclePackage" Content="Oracle 32/64 Package"/>
-        	</Grid>
-				</GroupBox>
+	        <GroupBox HorizontalAlignment="Center" Header="Software" x:Name="LoafGuiGroupBoxSoftware">
+			    	<StackPanel Width="120">
+	            <Button Margin="1" x:Name="ButtonAdminprocess" Content="Admin Process .dll"/>
+							<Button Margin="1" x:Name="ButtonPowerBIInstall32" Content="PowerBI 32bit"/>
+							<Button Margin="1" x:Name="ButtonPowerBIInstall64" Content="PowerBI 64bit"/>
+							<Button Margin="1" x:Name="ButtonNotepadPaint" Content="Notepad/Paint Install"/>
+	          </StackPanel>
+					</GroupBox>
 
-				<GroupBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Header="Cisco" x:Name="LoafGuiGroupBoxCisco">
-		    	<Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="22"/>
-							<RowDefinition Height="22"/>
-							<RowDefinition Height="22"/>
-							<RowDefinition Height="22"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Margin="1" x:Name="ButtonCiscoClient" Content="Cisco Client"/>
-						<Button Grid.Row="1" Margin="1" x:Name="ButtonCiscoISE" Content="Cisco ISE"/>
-						<Button Grid.Row="2" Margin="1" x:Name="ButtonCiscoAMP" Content="Cisco AMP"/>
-						<Button Grid.Row="3" Margin="1" x:Name="ButtonCiscoXML" Content="Cisco XML"/>
-        	</Grid>
-				</GroupBox>
+					<GroupBox HorizontalAlignment="Center" Header="Oracle" x:Name="LoafGuiGroupBoxOracle">
+			    	<StackPanel Width="120">
+	            <Button Margin="1" x:Name="ButtonOrainstall32" Content="Oracle 32"/>
+	            <Button Margin="1" x:Name="ButtonOrainstall64" Content="Oracle 64"/>
+	            <Button Margin="1" x:Name="ButtonOraclePackage" Content="Oracle 32/64 Package"/>
+	        	</StackPanel>
+					</GroupBox>
+
+					<GroupBox HorizontalAlignment="Center" Header="Cisco" x:Name="LoafGuiGroupBoxCisco">
+			    	<StackPanel Width="120">
+	            <Button Margin="1" x:Name="ButtonCiscoClient" Content="Cisco Client"/>
+							<Button Margin="1" x:Name="ButtonCiscoISE" Content="Cisco ISE"/>
+							<Button Margin="1" x:Name="ButtonCiscoAMP" Content="Cisco AMP"/>
+							<Button Margin="1" x:Name="ButtonCiscoXML" Content="Cisco XML"/>
+	        	</StackPanel>
+					</GroupBox>
+
+				</StackPanel>
 
         <TextBox Grid.Row="0" Grid.RowSpan="5" Grid.Column="1" x:Name="Loaflog2" TextWrapping="Wrap" Text=""/>
 
@@ -166,74 +112,51 @@
 
     <TabItem Header="Personalization" x:Name="LoafGuiTabPersonalization">
 	    <Grid Margin="4">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="66"/>
-          <RowDefinition Height="176"/>
-          <RowDefinition Height="154"/>
-          <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
+				<StackPanel Grid.Column="0">
 
-				<Image Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" x:Name="LoafIconPersonalization"/>
+					<Image Height="66" HorizontalAlignment="Left" x:Name="LoafIconPersonalization"/>
 
-				<GroupBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Header="LoafScript Themes" x:Name="LoafGuiGroupBoxThemes">
-					<Grid Grid.Row="0" Grid.Column="0" Margin="0">
-			      <Grid.RowDefinitions>
-		          <RowDefinition Height="22"/>
-		          <RowDefinition Height="22"/>
-		          <RowDefinition Height="22"/>
-		          <RowDefinition Height="22"/>
-		          <RowDefinition Height="22"/>
-		          <RowDefinition Height="22"/>
-		          <RowDefinition Height="22"/>
-			      </Grid.RowDefinitions>
-			      <Grid.ColumnDefinitions>
-		          <ColumnDefinition Width="22"/>
-		          <ColumnDefinition Width="98"/>
-			      </Grid.ColumnDefinitions>
+					<GroupBox HorizontalAlignment="Center" Header="LoafScript Themes" x:Name="LoafGuiGroupBoxThemes">
+						<Grid Grid.Row="0" Grid.Column="0" Margin="0">
+				      <Grid.RowDefinitions>
+			          <RowDefinition Height="30"/>
+			          <RowDefinition Height="30"/>
+				      </Grid.RowDefinitions>
+				      <Grid.ColumnDefinitions>
+			          <ColumnDefinition Width="30"/>
+			          <ColumnDefinition Width="30"/>
+			          <ColumnDefinition Width="30"/>
+			          <ColumnDefinition Width="30"/>
+				      </Grid.ColumnDefinitions>
 
-				    <Image Grid.Row="0" Grid.Column="0" Margin="1" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeLight.png"/>
-				    <Image Grid.Row="1" Grid.Column="0" Margin="1" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeDark.png"/>
-				    <Image Grid.Row="2" Grid.Column="0" Margin="1" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeCobalt.png"/>
-				    <Image Grid.Row="3" Grid.Column="0" Margin="1" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeNature.png"/>
-				    <Image Grid.Row="4" Grid.Column="0" Margin="1" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeVolcanic.png"/>
-				    <Image Grid.Row="5" Grid.Column="0" Margin="1" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeArctic.png"/>
-				    <Image Grid.Row="6" Grid.Column="0" Margin="1" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeYeezy.png"/>
-		        <Button Grid.Row="0" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonLightTheme" Content="Light" Background="#FFFFFF"/>
-				    <Button Grid.Row="1" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonDarkTheme" Content="Dark" Background="#121212" Foreground="#FFFFFF"/>
-		        <Button Grid.Row="2" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonCobaltTheme" Content="Cobalt" Background="#2E4057" Foreground="#FFFFFF"/>
-				    <Button Grid.Row="3" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonNatureTheme" Content="Nature" Background="#EEE0CB"/>
-		        <Button Grid.Row="4" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonVolcanicTheme" Content="Volcanic" Background="#E76F51"/>
-				    <Button Grid.Row="5" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonArcticTheme" Content="Arctic" Background="#ade8f4"/>
-				    <Button Grid.Row="6" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonYeezyTheme" Content="Yeezy" Background="#939499"/>
-		      </Grid>
-				</GroupBox>
+							<Button Grid.Row="0" Grid.Column="0" Margin="1" Padding="0" x:Name="ButtonLightTheme" Background="#FFFFFF"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeLight.png"/></Button>
+							<Button Grid.Row="0" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonDarkTheme" Background="#121212" Foreground="#FFFFFF"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeDark.png"/></Button>
+							<Button Grid.Row="0" Grid.Column="2" Margin="1" Padding="0" x:Name="ButtonCobaltTheme" Background="#2E4057" Foreground="#FFFFFF"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeCobalt.png"/></Button>
+							<Button Grid.Row="0" Grid.Column="3" Margin="1" Padding="0" x:Name="ButtonNatureTheme" Background="#EEE0CB"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeNature.png"/></Button>
+							<Button Grid.Row="1" Grid.Column="0" Margin="1" Padding="0" x:Name="ButtonVolcanicTheme" Background="#E76F51"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeVolcanic.png"/></Button>
+							<Button Grid.Row="1" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonArcticTheme" Background="#ade8f4"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeArctic.png"/></Button>
+							<Button Grid.Row="1" Grid.Column="2" Margin="1" Padding="0" x:Name="ButtonYeezyTheme" Background="#939499"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeYeezy.png"/></Button>
 
-        <GroupBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Header="Personalization" x:Name="LoafGuiGroupBoxPersonalization">
-		    	<Grid>
-	          <Grid.RowDefinitions>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-              <RowDefinition Height="22"/>
-	          </Grid.RowDefinitions>
-	          <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="120"/>
-	          </Grid.ColumnDefinitions>
-	          <Button Grid.Row="0" Margin="1" x:Name="ButtonThemeUnlock" Content="Dark/Light Theme"/>
-	          <Button Grid.Row="1" Margin="1" x:Name="ButtonColorUnlock" Content="Unlock Colors"/>
-	          <Button Grid.Row="2" Margin="1" x:Name="ButtonBgUnlock" Content="Unlock Backgrounds"/>
-	          <Button Grid.Row="3" Margin="1" x:Name="ButtonMSStoreUnlock" Content="Unlock Store"/>
-	          <Button Grid.Row="4" Margin="1" x:Name="ButtonMSStoreLock" Content="Lock Store"/>
-	          <Button Grid.Row="5" Margin="1" x:Name="ButtonLockScreenUnlock" Content="Unlock Lock Screen"/>
-	      	</Grid>
-        </GroupBox>
+			        </Grid>
+					</GroupBox>
+
+	        <GroupBox HorizontalAlignment="Center" Header="Personalization" x:Name="LoafGuiGroupBoxPersonalization">
+			    	<StackPanel Width="120">
+		          <Button Margin="1" x:Name="ButtonThemeUnlock" Content="Dark/Light Theme"/>
+		          <Button Margin="1" x:Name="ButtonColorUnlock" Content="Unlock Colors"/>
+		          <Button Margin="1" x:Name="ButtonBgUnlock" Content="Unlock Backgrounds"/>
+		          <Button Margin="1" x:Name="ButtonMSStoreUnlock" Content="Unlock Store"/>
+		          <Button Margin="1" x:Name="ButtonMSStoreLock" Content="Lock Store"/>
+		          <Button Margin="1" x:Name="ButtonLockScreenUnlock" Content="Unlock Lock Screen"/>
+		      	</StackPanel>
+	        </GroupBox>
+
+				</StackPanel>
 
         <TextBox Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" x:Name="Loaflog3" TextWrapping="Wrap" Text=""/>
 
@@ -242,30 +165,22 @@
 
 		<TabItem Header="Experimental" x:Name="LoafGuiTabExperimental">
       <Grid Margin="4">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="66"/>
-          <RowDefinition Height="44"/>
-          <RowDefinition Height="44"/>
-          <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
-        <Image Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" x:Name="LoafIconExperimental"/>
+				<StackPanel Grid.Column="0">
 
-				<GroupBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Header="Experimental" x:Name="LoafGuiGroupBoxExperimental">
-    			<Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="22"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Margin="1" x:Name="ExperimentalText" TextAlignment="Center" HorizontalAlignment="Center">Nothing Here!</TextBlock>
-        	</Grid>
-      	</GroupBox>
+	        <Image Height="66" HorizontalAlignment="Left" x:Name="LoafIconExperimental"/>
+
+					<GroupBox HorizontalAlignment="Center" Header="Experimental" x:Name="LoafGuiGroupBoxExperimental">
+	    			<StackPanel Width="120">
+	            <TextBlock Grid.Row="0" Margin="1" x:Name="ExperimentalText" TextAlignment="Center" HorizontalAlignment="Center">Nothing Here!</TextBlock>
+	        	</StackPanel>
+	      	</GroupBox>
+
+				</StackPanel>
 
     		<TextBox Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" x:Name="Loaflog4" TextWrapping="Wrap" Text=""/>
 

@@ -12,6 +12,7 @@
 - Sets BIOS Password
 - Runs HP Image Assistant (newest in _Post Image)
 - Runs Windows Update Assistant
+- Runs BGInfo
 
 - Copies required Admin Process data
 - Installs PowerBI 32bit or 64bit
@@ -22,6 +23,7 @@
 - Checks Oracle install (tnsping adtlev)
 - Checks Bitlocker status
 - Checks BIOS version
+- Runs HP Diagnostic Tool
 
 - Uninstalls Oracle
 - Uninstalls Microsoft Office
@@ -33,4 +35,4 @@
 - Unlocks Lock Screen Editing
 - Unlocks/Locks Microsoft Store
 
-# V3.5.1 7/16/2021
+# V3.6.0 8/5/2021

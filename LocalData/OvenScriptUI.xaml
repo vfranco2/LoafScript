@@ -1,0 +1,26 @@
+<Window x:Class="OvenGui.MainWindow"
+				x:Name="OvenGuiMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OvenGui"
+        mc:Ignorable="d"
+        Title="OvenScript" Height="226" Width="300">
+
+	<StackPanel Margin="4" Width="292">
+
+		<Image Height="66" HorizontalAlignment="Left" Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/LoafIconOven.png" x:Name="OvenIcon"/>
+		<TextBlock Margin="1" x:Name="DetectedDevelopment" TextAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+		<TextBlock Margin="1" x:Name="DetectedReleased" TextAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+		<StackPanel Width="120">
+	    <Button Margin="1" x:Name="ButtonBake" Content="Bake New LoafScript" IsEnabled="False"/>
+		</StackPanel>
+
+		<Rectangle x:Name="OvenLoader" Height="18" Width="0" Grid.Column="0" HorizontalAlignment="Left" Fill="#6BAB90"/>
+
+		<TextBox x:Name="Ovenlog1" Height="88" TextWrapping="Wrap" Text=""/>
+
+	</StackPanel>
+
+</Window>
