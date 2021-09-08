@@ -54,6 +54,7 @@
 	        <GroupBox HorizontalAlignment="Center" Header="Uninstalls" x:Name="LoafGuiGroupBoxUninstalls">
 			    	<StackPanel Width="120">
 	            <Button Margin="1" x:Name="ButtonOrauninstall" Content="Oracle"/>
+							<Button Margin="1" x:Name="ButtonCiscoKiller" Content="AnyConnect Killer"/>
 	            <Button Margin="1" x:Name="ButtonProgfeat" Content="Office"/>
 							<Button Margin="1" x:Name="ButtonRetireLocal" Content="Retire Machine"/>
 	          </StackPanel>

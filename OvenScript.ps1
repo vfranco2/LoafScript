@@ -1,4 +1,4 @@
-$CurrentVersion = "1.0.0"
+$CurrentVersion = "1.1.1"
 #OvenScript built by Vlad Franco
 #This script is designed to bundle the new version of LoafScript for easy upgrading.
 
@@ -54,77 +54,9 @@ Get-FormVariables
 #-------------------------
 #Functions/Output
 #-------------------------
+$WPFOvenIcon.Source = '\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/LoafIconOven.png'
 
-#Retire Old LoafScript Version
-Function Sunset{
-    $HostName=$env:UserName
-
-    Try{
-        $RetireLoaf = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
-
-        Move-Item $RetireLoaf "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafBackups"
-    }
-    Catch{
-        $WPFOvenlog1.Text = "Error: No existing LoafScript release found in Intern Refresh\LoafScript"
-    }
-    
-}
-
-Function MkDir{
-    $WPFOvenlog1.Text = "Creating new LoafScript directory"
-
-    Try{
-        $DirName = "LoafScript "+ $DetectedDevelopment
-        New-Item -ItemType Directory -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName\"
-        New-Item -ItemType Directory -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName\LocalData\"
-
-        $WPFOvenLoader.Width=97
-    }
-    Catch{
-        $WPFOvenlog1.Text = "Error: Could not create directory for new LoafScript version"
-    }
-}
-
-Function FileCopy{
-    $WPFOvenlog1.Text = "Copying files"
-
-    Try{
-        $DirName = "LoafScript "+ $DetectedDevelopment
-
-        Copy-Item ".\LoafScript.ps1" -Destination "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName" -Recurse -ErrorAction Stop
-        $WPFOvenLoader.Width=136
-        Copy-Item ".\LocalData\LoafScriptUI.xaml" -Destination "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName\LocalData" -Recurse -ErrorAction Stop
-        $WPFOvenLoader.Width=175
-        Copy-Item ".\README.md" -Destination "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName" -Recurse -ErrorAction Stop
-        $WPFOvenLoader.Width=214
-        Copy-Item ".\README.md" -Destination "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript" -Recurse -ErrorAction Stop
-        $WPFOvenLoader.Width=253
-        Rename-Item -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\README.md" -NewName "README.txt"
-    }
-    Catch{
-        $WPFOvenlog1.Text = "Error: Could not copy LoafScript files to new NOC folder"
-    }
-}
-
-Function Bake{
-    try{
-        Sunset
-        MkDir
-        FileCopy
-
-        $WPFOvenlog1.Text = "New Loaf Baked!"
-        $WPFOvenLoader.Width=292
-    }
-    catch{
-    
-    }
-    
-
-}
-$WPFButtonBake.Add_Click({
-    Bake
-})
-
+#Get existing LoafScript version, compare to LSMaster version
 $DetectedDevelopment = Get-Content -Path .\LoafScript.ps1 -TotalCount 1
 $DetectedDevelopment = $DetectedDevelopment.substring(0, $DetectedDevelopment.Length-1)
 $DetectedDevelopment = $DetectedDevelopment.substring(19)
@@ -140,6 +72,56 @@ $WPFDetectedReleased.Text = "LoafScript " + $CompareVersion + " detected in NOC.
 if ([version]$DetectedDevelopment -gt [version]$CompareVersion -or [version]$DetectedDevelopment -eq [version]$CompareVersion){
     $WPFButtonBake.IsEnabled="true"
 }
+
+Function Bake{
+    $HostName=$env:UserName
+    $DirName = "LoafScript "+ $DetectedDevelopment
+    try{
+    
+        #Move existing LoafScript release to LoafBackups
+        Try{
+            $WPFOvenlog1.Text = "Moving existing LoafScript to LoafBackups"
+            $RetireLoaf = Get-ChildItem -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafScript*"
+            Move-Item $RetireLoaf "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\LoafBackups"
+        }
+        Catch{
+            $WPFOvenlog1.Text = "Error: No existing LoafScript release found in Intern Refresh\LoafScript"
+        }
+
+        #Create directories for new LoafScript release
+        Try{
+            $WPFOvenlog1.Text = "Creating new LoafScript directory"
+            New-Item -ItemType Directory -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName\"
+            New-Item -ItemType Directory -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName\LocalData\"
+        }
+        Catch{
+            $WPFOvenlog1.Text = "Error: Could not create directory for new LoafScript version"
+        }
+
+        #Copy files from LSMaster to new LoafScript directories
+        Try{
+            $WPFOvenlog1.Text = "Copying files"
+            Remove-Item -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\README.txt" -Recurse -ErrorAction Stop
+            Copy-Item ".\LoafScript.ps1" -Destination "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName" -Recurse -ErrorAction Stop
+            Copy-Item ".\LocalData\LoafScriptUI.xaml" -Destination "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName\LocalData" -Recurse -ErrorAction Stop
+            Copy-Item ".\README.md" -Destination "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\$DirName" -Recurse -ErrorAction Stop
+            Copy-Item ".\README.md" -Destination "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript" -Recurse -ErrorAction Stop
+            Rename-Item -Path "\\nacorpcl\NOC_Install_Files\NOC\CDS\Client\Intern Refresh\LoafScript\README.md" -NewName "README.txt"
+        }
+        Catch{
+            $WPFOvenlog1.Text = "Error: Could not copy LoafScript files to new NOC folder"
+        }
+        
+        $WPFOvenIcon.Source = '\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/LoafIconOvenBaked.png'
+        $WPFOvenlog1.Text = "New Loaf Baked!"
+    }
+    catch{
+        $WPFOvenlog1.Text = "Error Baking Loaf!"
+    }
+}
+$WPFButtonBake.Add_Click({
+    Bake
+})
 
 #-------------------------
 #Launch UI

@@ -26,6 +26,7 @@
 - Runs HP Diagnostic Tool
 
 - Uninstalls Oracle
+- Remove Cisco AnyConnect Registry Keys
 - Uninstalls Microsoft Office
 - Retires Local Machine
 
@@ -35,4 +36,4 @@
 - Unlocks Lock Screen Editing
 - Unlocks/Locks Microsoft Store
 
-# V3.6.0 8/5/2021
+# V3.6.2 9/8/2021
