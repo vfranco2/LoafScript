@@ -69,7 +69,7 @@ $CompareVersion = $CompareVersion.substring(81)
 
 $WPFDetectedReleased.Text = "LoafScript " + $CompareVersion + " detected in NOC."
 
-if ([version]$DetectedDevelopment -gt [version]$CompareVersion -or [version]$DetectedDevelopment -eq [version]$CompareVersion){
+if ([version]$DetectedDevelopment -gt [version]$CompareVersion){
     $WPFButtonBake.IsEnabled="true"
 }
 

@@ -135,13 +135,14 @@
 			          <ColumnDefinition Width="30"/>
 				      </Grid.ColumnDefinitions>
 
-							<Button Grid.Row="0" Grid.Column="0" Margin="1" Padding="0" x:Name="ButtonLightTheme" Background="#FFFFFF"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeLight.png"/></Button>
-							<Button Grid.Row="0" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonDarkTheme" Background="#121212" Foreground="#FFFFFF"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeDark.png"/></Button>
-							<Button Grid.Row="0" Grid.Column="2" Margin="1" Padding="0" x:Name="ButtonCobaltTheme" Background="#2E4057" Foreground="#FFFFFF"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeCobalt.png"/></Button>
-							<Button Grid.Row="0" Grid.Column="3" Margin="1" Padding="0" x:Name="ButtonNatureTheme" Background="#EEE0CB"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeNature.png"/></Button>
-							<Button Grid.Row="1" Grid.Column="0" Margin="1" Padding="0" x:Name="ButtonVolcanicTheme" Background="#E76F51"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeVolcanic.png"/></Button>
-							<Button Grid.Row="1" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonArcticTheme" Background="#ade8f4"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeArctic.png"/></Button>
-							<Button Grid.Row="1" Grid.Column="2" Margin="1" Padding="0" x:Name="ButtonYeezyTheme" Background="#939499"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeYeezy.png"/></Button>
+								<Button Grid.Row="0" Grid.Column="0" Margin="1" Padding="0" x:Name="ButtonLightTheme" Background="#FFFFFF"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeLight.png"/></Button>
+								<Button Grid.Row="0" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonDarkTheme" Background="#121212" Foreground="#FFFFFF"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeDark.png"/></Button>
+								<Button Grid.Row="0" Grid.Column="2" Margin="1" Padding="0" x:Name="ButtonCobaltTheme" Background="#2E4057" Foreground="#FFFFFF"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeCobalt.png"/></Button>
+								<Button Grid.Row="0" Grid.Column="3" Margin="1" Padding="0" x:Name="ButtonNatureTheme" Background="#EEE0CB"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeNature.png"/></Button>
+								<Button Grid.Row="1" Grid.Column="0" Margin="1" Padding="0" x:Name="ButtonVolcanicTheme" Background="#E76F51"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeVolcanic.png"/></Button>
+								<Button Grid.Row="1" Grid.Column="1" Margin="1" Padding="0" x:Name="ButtonArcticTheme" Background="#ade8f4"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeArctic.png"/></Button>
+								<Button Grid.Row="1" Grid.Column="2" Margin="1" Padding="0" x:Name="ButtonYeezyTheme" Background="#939499"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeYeezy.png"/></Button>
+								<Button Grid.Row="1" Grid.Column="3" Margin="1" Padding="0" x:Name="ButtonCoffeeTheme" Background="#939499"><Image Source="\\nacorpcl/NOC_Install_Files/NOC/CDS/Client/Intern Refresh/LoafScript/RemoteData/LoafIcons/ThemeCoffee.png"/></Button>
 
 			        </Grid>
 					</GroupBox>
@@ -175,9 +176,9 @@
 
 	        <Image Height="66" HorizontalAlignment="Left" x:Name="LoafIconExperimental"/>
 
-					<GroupBox HorizontalAlignment="Center" Header="Experimental" x:Name="LoafGuiGroupBoxExperimental">
+					<GroupBox HorizontalAlignment="Center" Header="Music" x:Name="LoafGuiGroupBoxExperimental">
 	    			<StackPanel Width="120">
-	            <TextBlock Grid.Row="0" Margin="1" x:Name="ExperimentalText" TextAlignment="Center" HorizontalAlignment="Center">Nothing Here!</TextBlock>
+		          <Button Margin="1" x:Name="ButtonKanye" Content="Kanye"/>
 	        	</StackPanel>
 	      	</GroupBox>
 
